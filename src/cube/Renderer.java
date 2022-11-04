@@ -16,13 +16,15 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import static javax.management.Query.lt;
 
 /**
  *
  * @author NEXT
  */
-public class Renderer implements GLEventListener, KeyListener, MouseListener, MouseMotionListener {
+public class Renderer implements GLEventListener, KeyListener, MouseListener, MouseMotionListener, MouseWheelListener {
     public static DisplayMode dm, dm_old;
     private GLU glu = new GLU();
     private float rquad = 0.0f;
@@ -32,6 +34,11 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
     
     private static final float DEFAULT_CAMERA_ANGLE_X = 45.0f;
     private static final float DEFAULT_CAMERA_ANGLE_Y = 45.0f;
+    
+    private static final float DEFAULT_ZOOM = -5.0f;
+    private static final float MIN_ZOOM = -10.0f;
+    private static final float MAX_ZOOM = 0.0f;
+    private float zoom = DEFAULT_ZOOM;
     
     private static final float ZERO_F = 0.0f;
     private static final float ONE_F  = 1.0f;
@@ -66,6 +73,7 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
         gl.glTranslatef( 0f, 0f, -5.0f ); 
 
         // Rotate The Cube On X, Y & Z
+        gl.glTranslatef(ZERO_F, ZERO_F, zoom);
         gl.glRotatef(cameraAngleX, ONE_F, ZERO_F, ZERO_F);
 	gl.glRotatef(cameraAngleY, ZERO_F, ONE_F, ZERO_F);
 	gl.glRotatef(cameraAngleZ, ZERO_F, ZERO_F, ONE_F);
@@ -202,4 +210,16 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
     @Override public void mousePressed(MouseEvent e) { }
     @Override public void mouseReleased(MouseEvent e) { }
     @Override public void mouseMoved(MouseEvent e) { }
+
+    @Override
+    public void mouseWheelMoved(MouseWheelEvent e) {
+        zoom += -e.getWheelRotation();
+        
+        if(zoom > MAX_ZOOM) {
+            zoom = MAX_ZOOM;
+        }
+        if(zoom < MIN_ZOOM) {
+            zoom = MIN_ZOOM;
+        }
+    }
 }

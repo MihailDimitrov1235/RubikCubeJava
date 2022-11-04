@@ -23,8 +23,9 @@ public class Main {
         gc.addKeyListener(sq);
         gc.addMouseListener(sq);
         gc.addMouseMotionListener(sq);
-        gc.addGLEventListener(sq);    
-        gc.setSize(400, 400);
+        gc.addGLEventListener(sq);
+        gc.addMouseWheelListener(sq);
+        gc.setSize(640, 480);
         
         Window w = new Window("Test", 640, 480);    
         w.add(gc);    
