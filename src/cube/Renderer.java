@@ -69,7 +69,7 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
   
         gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT );
         gl.glLoadIdentity();
-        gl.glTranslatef( -2.0f, 0f, -5.0f ); 
+        gl.glTranslatef(ZERO_F, ZERO_F, -5.0f ); 
 
         // Rotate The Cube On X, Y & Z
         gl.glTranslatef(ZERO_F, ZERO_F, zoom);
@@ -149,7 +149,7 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
         }
         gl.glEnd(); // Done Drawing The Quad
         gl.glFlush();
-        
+    }  
     
     @Override    
     public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height ) {        
