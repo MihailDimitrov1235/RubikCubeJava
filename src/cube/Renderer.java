@@ -11,16 +11,40 @@ import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLEventListener;
 import com.jogamp.opengl.glu.GLU;
 import java.awt.DisplayMode;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import static javax.management.Query.lt;
 
 /**
  *
  * @author NEXT
  */
-public class Renderer implements GLEventListener {
+public class Renderer implements GLEventListener, KeyListener, MouseListener, MouseMotionListener {
     public static DisplayMode dm, dm_old;
-   private GLU glu = new GLU();
-   private float rquad = 0.0f;
+    private GLU glu = new GLU();
+    private float rquad = 0.0f;
+    
+    private static final int CANVAS_WIDTH  = 640;
+    private static final int CANVAS_HEIGHT = 480;
+    
+    private static final float DEFAULT_CAMERA_ANGLE_X = 45.0f;
+    private static final float DEFAULT_CAMERA_ANGLE_Y = 45.0f;
+    
+    private static final float ZERO_F = 0.0f;
+    private static final float ONE_F  = 1.0f;
+    private static final float TWO_F  = 2.0f;
+    
+    private static final int CAMERA_ROTATE_STEP_DEGREES  = 5;
+    
+    private float cameraAngleX = DEFAULT_CAMERA_ANGLE_X;
+    private float cameraAngleY = DEFAULT_CAMERA_ANGLE_Y;
+    private float cameraAngleZ = ZERO_F;
+    
+    private int mouseX = CANVAS_WIDTH/2;
+    private int mouseY = CANVAS_HEIGHT/2;
    
     @Override
     public void init(GLAutoDrawable drawable) {    
@@ -42,7 +66,9 @@ public class Renderer implements GLEventListener {
         gl.glTranslatef( 0f, 0f, -5.0f ); 
 
         // Rotate The Cube On X, Y & Z
-        gl.glRotatef(rquad, 1.0f, 1.0f, 1.0f); 
+        gl.glRotatef(cameraAngleX, ONE_F, ZERO_F, ZERO_F);
+	gl.glRotatef(cameraAngleY, ZERO_F, ONE_F, ZERO_F);
+	gl.glRotatef(cameraAngleZ, ZERO_F, ZERO_F, ONE_F);
         
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -113,5 +139,41 @@ public class Renderer implements GLEventListener {
     @Override    
     public void dispose(GLAutoDrawable drawable) {    
         
-    }       
+    }
+    
+    @Override
+    public void keyPressed(KeyEvent e) {
+        
+    }
+    
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        final int buffer = 2;
+
+        if (e.getX() < mouseX - buffer) {
+            cameraAngleY -= CAMERA_ROTATE_STEP_DEGREES;
+        }
+        else if (e.getX() > mouseX + buffer) {
+            cameraAngleY += CAMERA_ROTATE_STEP_DEGREES;
+        }
+
+        if (e.getY() < mouseY - buffer) {
+            cameraAngleX -= CAMERA_ROTATE_STEP_DEGREES;
+        }
+        else if (e.getY() > mouseY + buffer) {
+            cameraAngleX += CAMERA_ROTATE_STEP_DEGREES;
+        }
+
+        mouseX = e.getX();
+        mouseY = e.getY();
+    }
+    
+    @Override public void keyReleased(KeyEvent e) { }
+    @Override public void keyTyped(KeyEvent e) { }
+    @Override public void mouseClicked(MouseEvent e) { }
+    @Override public void mouseEntered(MouseEvent e) { }
+    @Override public void mouseExited(MouseEvent e) { }
+    @Override public void mousePressed(MouseEvent e) { }
+    @Override public void mouseReleased(MouseEvent e) { }
+    @Override public void mouseMoved(MouseEvent e) { }
 }

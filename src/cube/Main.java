@@ -19,13 +19,15 @@ public class Main {
         GLCapabilities cap = new GLCapabilities(gp);
         
         final GLCanvas gc = new GLCanvas(cap);    
-        Renderer sq = new Renderer();    
+        Renderer sq = new Renderer();
+        gc.addKeyListener(sq);
+        gc.addMouseListener(sq);
+        gc.addMouseMotionListener(sq);
         gc.addGLEventListener(sq);    
         gc.setSize(400, 400);
         
         Window w = new Window("Test", 640, 480);    
         w.add(gc);    
- 
         w.setVisibility(true);
         final FPSAnimator animator = new FPSAnimator(gc, 300, true);
 		
