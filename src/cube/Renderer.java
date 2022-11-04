@@ -27,7 +27,6 @@ import static javax.management.Query.lt;
 public class Renderer implements GLEventListener, KeyListener, MouseListener, MouseMotionListener, MouseWheelListener {
     public static DisplayMode dm, dm_old;
     private GLU glu = new GLU();
-    private float rquad = 0.0f;
     
     private static final int CANVAS_WIDTH  = 640;
     private static final int CANVAS_HEIGHT = 480;
@@ -70,7 +69,7 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
   
         gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT );
         gl.glLoadIdentity();
-        gl.glTranslatef( 0f, 0f, -5.0f ); 
+        gl.glTranslatef( -2.0f, 0f, -5.0f ); 
 
         // Rotate The Cube On X, Y & Z
         gl.glTranslatef(ZERO_F, ZERO_F, zoom);
@@ -150,8 +149,6 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
         }
         gl.glEnd(); // Done Drawing The Quad
         gl.glFlush();
-        
-        rquad -= 0.15f;
     } 
     
     @Override    
