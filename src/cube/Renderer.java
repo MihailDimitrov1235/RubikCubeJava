@@ -28,6 +28,8 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
     public static DisplayMode dm, dm_old;
     private GLU glu = new GLU();
     
+    private static float[][][][][][] cube = new float[3][3][3][6][4][3];
+    
     private static final int CANVAS_WIDTH  = 640;
     private static final int CANVAS_HEIGHT = 480;
     
@@ -85,7 +87,7 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
       p[2] = -sin * p[1] + cos * p[2];
       p[1] = temp;
       return p;
-   }
+    }
     
     
     @Override
@@ -97,6 +99,113 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
         gl.glEnable( GL2.GL_DEPTH_TEST );
         gl.glDepthFunc( GL2.GL_LEQUAL );
         gl.glHint( GL2.GL_PERSPECTIVE_CORRECTION_HINT, GL2.GL_NICEST );
+        for (int x = 0; x < 3; x++) {
+            for (int y = 0; y < 3; y++) {
+                for (int z = 0; z < 3; z++) {
+                    //TOP
+                    cube[x][y][z][0][0][0] = -1.1f+ x*2.1f;
+                    cube[x][y][z][0][0][1] = -1.1f+ y*2.1f;
+                    cube[x][y][z][0][0][2] = -3.1f+ z*2.1f;
+                    
+                    cube[x][y][z][0][1][0] = -3.1f+ x*2.1f;
+                    cube[x][y][z][0][1][1] = -1.1f+ y*2.1f;
+                    cube[x][y][z][0][1][2] = -3.1f+ z*2.1f;
+                    
+                    cube[x][y][z][0][2][0] = -3.1f+ x*2.1f;
+                    cube[x][y][z][0][2][1] = -1.1f+ y*2.1f;
+                    cube[x][y][z][0][2][2] = -1.1f+ z*2.1f;
+                    
+                    cube[x][y][z][0][3][0] = -1.1f+ x*2.1f;
+                    cube[x][y][z][0][3][1] = -1.1f+ y*2.1f;
+                    cube[x][y][z][0][3][2] = -1.1f+ z*2.1f;
+                    
+                    //BOTTOM
+                    cube[x][y][z][1][0][0] = -1.1f+ x*2.1f;
+                    cube[x][y][z][1][0][1] = -3.1f+ y*2.1f;
+                    cube[x][y][z][1][0][2] = -1.1f+ z*2.1f;
+                    
+                    cube[x][y][z][1][1][0] = -3.1f+ x*2.1f;
+                    cube[x][y][z][1][1][1] = -3.1f+ y*2.1f;
+                    cube[x][y][z][1][1][2] = -1.1f+ z*2.1f;
+                    
+                    cube[x][y][z][1][2][0] = -3.1f+ x*2.1f;
+                    cube[x][y][z][1][2][1] = -3.1f+ y*2.1f;
+                    cube[x][y][z][1][2][2] = -3.1f+ z*2.1f;
+                    
+                    cube[x][y][z][1][3][0] = -1.1f+ x*2.1f;
+                    cube[x][y][z][1][3][1] = -3.1f+ y*2.1f;
+                    cube[x][y][z][1][3][2] = -3.1f+ z*2.1f;
+                    
+                    //FRONT
+                    cube[x][y][z][2][0][0] = -1.1f+ x*2.1f;
+                    cube[x][y][z][2][0][1] = -1.1f+ y*2.1f;
+                    cube[x][y][z][2][0][2] = -1.1f+ z*2.1f;
+                    
+                    cube[x][y][z][2][1][0] = -3.1f+ x*2.1f;
+                    cube[x][y][z][2][1][1] = -1.1f+ y*2.1f;
+                    cube[x][y][z][2][1][2] = -1.1f+ z*2.1f;
+                    
+                    cube[x][y][z][2][2][0] = -3.1f+ x*2.1f;
+                    cube[x][y][z][2][2][1] = -3.1f+ y*2.1f;
+                    cube[x][y][z][2][2][2] = -1.1f+ z*2.1f;
+                    
+                    cube[x][y][z][2][3][0] = -1.1f+ x*2.1f;
+                    cube[x][y][z][2][3][1] = -3.1f+ y*2.1f;
+                    cube[x][y][z][2][3][2] = -1.1f+ z*2.1f;
+                    
+                    //BACz
+                    cube[x][y][z][3][0][0] = -1.1f+ x*2.1f;
+                    cube[x][y][z][3][0][1] = -3.1f+ y*2.1f;
+                    cube[x][y][z][3][0][2] = -3.1f+ z*2.1f;
+                    
+                    cube[x][y][z][3][1][0] = -3.1f+ x*2.1f;
+                    cube[x][y][z][3][1][1] = -3.1f+ y*2.1f;
+                    cube[x][y][z][3][1][2] = -3.1f+ z*2.1f;
+                    
+                    cube[x][y][z][3][2][0] = -3.1f+ x*2.1f;
+                    cube[x][y][z][3][2][1] = -1.1f+ y*2.1f;
+                    cube[x][y][z][3][2][2] = -3.1f+ z*2.1f;
+                    
+                    cube[x][y][z][3][3][0] = -1.1f+ x*2.1f;
+                    cube[x][y][z][3][3][1] = -1.1f+ y*2.1f;
+                    cube[x][y][z][3][3][2] = -3.1f+ z*2.1f;
+                    
+                    //LEFT
+                    cube[x][y][z][4][0][0] = -3.1f+ x*2.1f;
+                    cube[x][y][z][4][0][1] = -1.1f+ y*2.1f;
+                    cube[x][y][z][4][0][2] = -1.1f+ z*2.1f;
+                    
+                    cube[x][y][z][4][1][0] = -3.1f+ x*2.1f;
+                    cube[x][y][z][4][1][1] = -1.1f+ y*2.1f;
+                    cube[x][y][z][4][1][2] = -3.1f+ z*2.1f;
+                    
+                    cube[x][y][z][4][2][0] = -3.1f+ x*2.1f;
+                    cube[x][y][z][4][2][1] = -3.1f+ y*2.1f;
+                    cube[x][y][z][4][2][2] = -3.1f+ z*2.1f;
+                    
+                    cube[x][y][z][4][3][0] = -3.1f+ x*2.1f;
+                    cube[x][y][z][4][3][1] = -3.1f+ y*2.1f;
+                    cube[x][y][z][4][3][2] = -1.1f+ z*2.1f;
+                    
+                    //RxGHT
+                    cube[x][y][z][5][0][0] = -1.1f+ x*2.1f;
+                    cube[x][y][z][5][0][1] = -1.1f+ y*2.1f;
+                    cube[x][y][z][5][0][2] = -3.1f+ z*2.1f;
+                    
+                    cube[x][y][z][5][1][0] = -1.1f+ x*2.1f;
+                    cube[x][y][z][5][1][1] = -1.1f+ y*2.1f;
+                    cube[x][y][z][5][1][2] = -1.1f+ z*2.1f;
+                    
+                    cube[x][y][z][5][2][0] = -1.1f+ x*2.1f;
+                    cube[x][y][z][5][2][1] = -3.1f+ y*2.1f;
+                    cube[x][y][z][5][2][2] = -1.1f+ z*2.1f;
+                    
+                    cube[x][y][z][5][3][0] = -1.1f+ x*2.1f;
+                    cube[x][y][z][5][3][1] = -3.1f+ y*2.1f;
+                    cube[x][y][z][5][3][2] = -3.1f+ z*2.1f;
+                }
+            }
+        }
     }    
 
     @Override    
@@ -126,9 +235,9 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
                             }else{
                                 gl.glColor3f(0f,0f,0f);
                             }
-                            p[0] = -1.1f+ i*2.1f;
-                            p[1] = -1.1f+ j*2.1f;
-                            p[2] = -3.1f+ k*2.1f;
+                            p[0] = cube[i][j][k][0][0][0];
+                            p[1] = cube[i][j][k][0][0][1];
+                            p[2] = cube[i][j][k][0][0][2];
                             if(r1 == i+1){
                                 p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
                             }
@@ -136,9 +245,9 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
                                 p = yRotate(p,(float) Math.sin(yAngle),(float)Math.cos(yAngle));
                             }
                             gl.glVertex3f( p[0],p[1],p[2] ); // Top Right Of The Quad (Left)
-                            p[0] = -3.1f+ i*2.1f;
-                            p[1] = -1.1f+ j*2.1f;
-                            p[2] = -3.1f+ k*2.1f;
+                            p[0] = cube[i][j][k][0][1][0];
+                            p[1] = cube[i][j][k][0][1][1];
+                            p[2] = cube[i][j][k][0][1][2];
                             if(r1 == i+1){
                                 p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
                             }
@@ -146,9 +255,9 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
                                 p = yRotate(p,(float) Math.sin(yAngle),(float)Math.cos(yAngle));
                             }
                             gl.glVertex3f( p[0],p[1],p[2] );
-                            p[0] = -3.1f+ i*2.1f;
-                            p[1] = -1.1f+ j*2.1f;
-                            p[2] = -1.1f+ k*2.1f;
+                            p[0] = cube[i][j][k][0][2][0];
+                            p[1] = cube[i][j][k][0][2][1];
+                            p[2] = cube[i][j][k][0][2][2];
                             if(r1 == i+1){
                                 p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
                             }
@@ -156,9 +265,9 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
                                 p = yRotate(p,(float) Math.sin(yAngle),(float)Math.cos(yAngle));
                             }
                             gl.glVertex3f( p[0],p[1],p[2] );
-                            p[0] = -1.1f+ i*2.1f;
-                            p[1] = -1.1f+ j*2.1f;
-                            p[2] = -1.1f+ k*2.1f;
+                            p[0] = cube[i][j][k][0][3][0];
+                            p[1] = cube[i][j][k][0][3][1];
+                            p[2] = cube[i][j][k][0][3][2];
                             if(r1 == i+1){
                                 p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
                             }
@@ -174,9 +283,9 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
                             }else{
                                 gl.glColor3f(0f,0f,0f);
                             }
-                            p[0] = -1.1f+ i*2.1f;
-                            p[1] = -3.1f+ j*2.1f;
-                            p[2] = -1.1f+ k*2.1f;
+                            p[0] = cube[i][j][k][1][0][0];
+                            p[1] = cube[i][j][k][1][0][1];
+                            p[2] = cube[i][j][k][1][0][2];
                             if(r1 == i+1){
                                 p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
                             }
@@ -184,9 +293,9 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
                                 p = yRotate(p,(float) Math.sin(yAngle),(float)Math.cos(yAngle));
                             }
                             gl.glVertex3f( p[0],p[1],p[2] ); // Top Right Of The Quad (Left)
-                            p[0] = -3.1f+ i*2.1f;
-                            p[1] = -3.1f+ j*2.1f;
-                            p[2] = -1.1f+ k*2.1f;
+                            p[0] = cube[i][j][k][1][1][0];
+                            p[1] = cube[i][j][k][1][1][1];
+                            p[2] = cube[i][j][k][1][1][2];
                             if(r1 == i+1){
                                 p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
                             }
@@ -194,9 +303,9 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
                                 p = yRotate(p,(float) Math.sin(yAngle),(float)Math.cos(yAngle));
                             }
                             gl.glVertex3f( p[0],p[1],p[2] );
-                            p[0] = -3.1f+ i*2.1f;
-                            p[1] = -3.1f+ j*2.1f;
-                            p[2] = -3.1f+ k*2.1f;
+                            p[0] = cube[i][j][k][1][2][0];
+                            p[1] = cube[i][j][k][1][2][1];
+                            p[2] = cube[i][j][k][1][2][2];
                             if(r1 == i+1){
                                 p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
                             }
@@ -204,9 +313,9 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
                                 p = yRotate(p,(float) Math.sin(yAngle),(float)Math.cos(yAngle));
                             }
                             gl.glVertex3f( p[0],p[1],p[2] );
-                            p[0] = -1.1f+ i*2.1f;
-                            p[1] = -3.1f+ j*2.1f;
-                            p[2] = -3.1f+ k*2.1f;
+                            p[0] = cube[i][j][k][1][3][0];
+                            p[1] = cube[i][j][k][1][3][1];
+                            p[2] = cube[i][j][k][1][3][2];
                             if(r1 == i+1){
                                 p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
                             }
@@ -222,9 +331,9 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
                             }else{
                                 gl.glColor3f(0f,0f,0f);
                             }
-                            p[0] = -1.1f+ i*2.1f;
-                            p[1] = -1.1f+ j*2.1f;
-                            p[2] = -1.1f+ k*2.1f;
+                            p[0] = cube[i][j][k][2][0][0];
+                            p[1] = cube[i][j][k][2][0][1];
+                            p[2] = cube[i][j][k][2][0][2];
                             if(r1 == i+1){
                                 p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
                             }
@@ -232,9 +341,9 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
                                 p = yRotate(p,(float) Math.sin(yAngle),(float)Math.cos(yAngle));
                             }
                             gl.glVertex3f( p[0],p[1],p[2] ); // Top Right Of The Quad (Left)
-                            p[0] = -3.1f+ i*2.1f;
-                            p[1] = -1.1f+ j*2.1f;
-                            p[2] = -1.1f+ k*2.1f;
+                            p[0] = cube[i][j][k][2][1][0];
+                            p[1] = cube[i][j][k][2][1][1];
+                            p[2] = cube[i][j][k][2][1][2];
                             if(r1 == i+1){
                                 p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
                             }
@@ -242,9 +351,9 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
                                 p = yRotate(p,(float) Math.sin(yAngle),(float)Math.cos(yAngle));
                             }
                             gl.glVertex3f( p[0],p[1],p[2] );
-                            p[0] = -3.1f+ i*2.1f;
-                            p[1] = -3.1f+ j*2.1f;
-                            p[2] = -1.1f+ k*2.1f;
+                            p[0] = cube[i][j][k][2][2][0];
+                            p[1] = cube[i][j][k][2][2][1];
+                            p[2] = cube[i][j][k][2][2][2];
                             if(r1 == i+1){
                                 p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
                             }
@@ -252,9 +361,9 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
                                 p = yRotate(p,(float) Math.sin(yAngle),(float)Math.cos(yAngle));
                             }
                             gl.glVertex3f( p[0],p[1],p[2] );
-                            p[0] = -1.1f+ i*2.1f;
-                            p[1] = -3.1f+ j*2.1f;
-                            p[2] = -1.1f+ k*2.1f;
+                            p[0] = cube[i][j][k][2][3][0];
+                            p[1] = cube[i][j][k][2][3][1];
+                            p[2] = cube[i][j][k][2][3][2];
                             if(r1 == i+1){
                                 p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
                             }
@@ -270,9 +379,9 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
                             }else{
                                 gl.glColor3f(0f,0f,0f);
                             }
-                            p[0] = -1.1f+ i*2.1f;
-                            p[1] = -3.1f+ j*2.1f;
-                            p[2] = -3.1f+ k*2.1f;
+                            p[0] = cube[i][j][k][3][0][0];
+                            p[1] = cube[i][j][k][3][0][1];
+                            p[2] = cube[i][j][k][3][0][2];
                             if(r1 == i+1){
                                 p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
                             }
@@ -280,9 +389,9 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
                                 p = yRotate(p,(float) Math.sin(yAngle),(float)Math.cos(yAngle));
                             }
                             gl.glVertex3f( p[0],p[1],p[2] ); // Top Right Of The Quad (Left)
-                            p[0] = -3.1f+ i*2.1f;
-                            p[1] = -3.1f+ j*2.1f;
-                            p[2] = -3.1f+ k*2.1f;
+                            p[0] = cube[i][j][k][3][1][0];
+                            p[1] = cube[i][j][k][3][1][1];
+                            p[2] = cube[i][j][k][3][1][2];
                             if(r1 == i+1){
                                 p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
                             }
@@ -290,9 +399,9 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
                                 p = yRotate(p,(float) Math.sin(yAngle),(float)Math.cos(yAngle));
                             }
                             gl.glVertex3f( p[0],p[1],p[2] );
-                            p[0] = -3.1f+ i*2.1f;
-                            p[1] = -1.1f+ j*2.1f;
-                            p[2] = -3.1f+ k*2.1f;
+                            p[0] = cube[i][j][k][3][2][0];
+                            p[1] = cube[i][j][k][3][2][1];
+                            p[2] = cube[i][j][k][3][2][2];
                             if(r1 == i+1){
                                 p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
                             }
@@ -300,9 +409,9 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
                                 p = yRotate(p,(float) Math.sin(yAngle),(float)Math.cos(yAngle));
                             }
                             gl.glVertex3f( p[0],p[1],p[2] );
-                            p[0] = -1.1f+ i*2.1f;
-                            p[1] = -1.1f+ j*2.1f;
-                            p[2] = -3.1f+ k*2.1f;
+                            p[0] = cube[i][j][k][3][3][0];
+                            p[1] = cube[i][j][k][3][3][1];
+                            p[2] = cube[i][j][k][3][3][2];
                             if(r1 == i+1){
                                 p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
                             }
@@ -318,9 +427,9 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
                             }else{
                                 gl.glColor3f(0f,0f,0f);
                             }
-                            p[0] = -3.1f+ i*2.1f;
-                            p[1] = -1.1f+ j*2.1f;
-                            p[2] = -1.1f+ k*2.1f;
+                            p[0] = cube[i][j][k][4][0][0];
+                            p[1] = cube[i][j][k][4][0][1];
+                            p[2] = cube[i][j][k][4][0][2];
                             if(r1 == i+1){
                                 p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
                             }
@@ -328,9 +437,9 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
                                 p = yRotate(p,(float) Math.sin(yAngle),(float)Math.cos(yAngle));
                             }
                             gl.glVertex3f( p[0],p[1],p[2] ); // Top Right Of The Quad (Left)
-                            p[0] = -3.1f+ i*2.1f;
-                            p[1] = -1.1f+ j*2.1f;
-                            p[2] = -3.1f+ k*2.1f;
+                            p[0] = cube[i][j][k][4][1][0];
+                            p[1] = cube[i][j][k][4][1][1];
+                            p[2] = cube[i][j][k][4][1][2];
                             if(r1 == i+1){
                                 p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
                             }
@@ -338,9 +447,9 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
                                 p = yRotate(p,(float) Math.sin(yAngle),(float)Math.cos(yAngle));
                             }
                             gl.glVertex3f( p[0],p[1],p[2] );
-                            p[0] = -3.1f+ i*2.1f;
-                            p[1] = -3.1f+ j*2.1f;
-                            p[2] = -3.1f+ k*2.1f;
+                            p[0] = cube[i][j][k][4][2][0];
+                            p[1] = cube[i][j][k][4][2][1];
+                            p[2] = cube[i][j][k][4][2][2];
                             if(r1 == i+1){
                                 p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
                             }
@@ -348,9 +457,9 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
                                 p = yRotate(p,(float) Math.sin(yAngle),(float)Math.cos(yAngle));
                             }
                             gl.glVertex3f( p[0],p[1],p[2] );
-                            p[0] = -3.1f+ i*2.1f;
-                            p[1] = -3.1f+ j*2.1f;
-                            p[2] = -1.1f+ k*2.1f;
+                            p[0] = cube[i][j][k][4][3][0];
+                            p[1] = cube[i][j][k][4][3][1];
+                            p[2] = cube[i][j][k][4][3][2];
                             if(r1 == i+1){
                                 p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
                             }
@@ -366,9 +475,9 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
                             }else{
                                 gl.glColor3f(0f,0f,0f);
                             }
-                            p[0] = -1.1f+ i*2.1f;
-                            p[1] = -1.1f+ j*2.1f;
-                            p[2] = -3.1f+ k*2.1f;
+                            p[0] = cube[i][j][k][5][0][0];
+                            p[1] = cube[i][j][k][5][0][1];
+                            p[2] = cube[i][j][k][5][0][2];
                             if(r1 == i+1){
                                 p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
                             }
@@ -376,9 +485,9 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
                                 p = yRotate(p,(float) Math.sin(yAngle),(float)Math.cos(yAngle));
                             }
                             gl.glVertex3f( p[0],p[1],p[2] ); // Top Right Of The Quad (Left)
-                            p[0] = -1.1f+ i*2.1f;
-                            p[1] = -1.1f+ j*2.1f;
-                            p[2] = -1.1f+ k*2.1f;
+                            p[0] = cube[i][j][k][5][1][0];
+                            p[1] = cube[i][j][k][5][1][1];
+                            p[2] = cube[i][j][k][5][1][2];
                             if(r1 == i+1){
                                 p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
                             }
@@ -386,9 +495,9 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
                                 p = yRotate(p,(float) Math.sin(yAngle),(float)Math.cos(yAngle));
                             }
                             gl.glVertex3f( p[0],p[1],p[2] );
-                            p[0] = -1.1f+ i*2.1f;
-                            p[1] = -3.1f+ j*2.1f;
-                            p[2] = -1.1f+ k*2.1f;
+                            p[0] = cube[i][j][k][5][2][0];
+                            p[1] = cube[i][j][k][5][2][1];
+                            p[2] = cube[i][j][k][5][2][2];
                             if(r1 == i+1){
                                 p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
                             }
@@ -396,9 +505,9 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
                                 p = yRotate(p,(float) Math.sin(yAngle),(float)Math.cos(yAngle));
                             }
                             gl.glVertex3f( p[0],p[1],p[2] );
-                            p[0] = -1.1f+ i*2.1f;
-                            p[1] = -3.1f+ j*2.1f;
-                            p[2] = -3.1f+ k*2.1f;
+                            p[0] = cube[i][j][k][5][3][0];
+                            p[1] = cube[i][j][k][5][3][1];
+                            p[2] = cube[i][j][k][5][3][2];
                             if(r1 == i+1){
                                 p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
                             }
