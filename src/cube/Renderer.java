@@ -130,28 +130,40 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
                             p[1] = -1.1f+ j*2.1f;
                             p[2] = -3.1f+ k*2.1f;
                             if(r1 == i+1){
-                            p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                                p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                            }
+                            if(c1 == j + 1) {
+                                p = yRotate(p,(float) Math.sin(yAngle),(float)Math.cos(yAngle));
                             }
                             gl.glVertex3f( p[0],p[1],p[2] ); // Top Right Of The Quad (Left)
                             p[0] = -3.1f+ i*2.1f;
                             p[1] = -1.1f+ j*2.1f;
                             p[2] = -3.1f+ k*2.1f;
                             if(r1 == i+1){
-                            p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                                p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                            }
+                            if(c1 == j + 1) {
+                                p = yRotate(p,(float) Math.sin(yAngle),(float)Math.cos(yAngle));
                             }
                             gl.glVertex3f( p[0],p[1],p[2] );
                             p[0] = -3.1f+ i*2.1f;
                             p[1] = -1.1f+ j*2.1f;
                             p[2] = -1.1f+ k*2.1f;
                             if(r1 == i+1){
-                            p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                                p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                            }
+                            if(c1 == j + 1) {
+                                p = yRotate(p,(float) Math.sin(yAngle),(float)Math.cos(yAngle));
                             }
                             gl.glVertex3f( p[0],p[1],p[2] );
                             p[0] = -1.1f+ i*2.1f;
                             p[1] = -1.1f+ j*2.1f;
                             p[2] = -1.1f+ k*2.1f;
                             if(r1 == i+1){
-                            p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                                p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                            }
+                            if(c1 == j + 1) {
+                                p = yRotate(p,(float) Math.sin(yAngle),(float)Math.cos(yAngle));
                             }
                             gl.glVertex3f( p[0],p[1],p[2] );
                         
@@ -166,28 +178,40 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
                             p[1] = -3.1f+ j*2.1f;
                             p[2] = -1.1f+ k*2.1f;
                             if(r1 == i+1){
-                            p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                                p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                            }
+                            if(c1 == j + 1) {
+                                p = yRotate(p,(float) Math.sin(yAngle),(float)Math.cos(yAngle));
                             }
                             gl.glVertex3f( p[0],p[1],p[2] ); // Top Right Of The Quad (Left)
                             p[0] = -3.1f+ i*2.1f;
                             p[1] = -3.1f+ j*2.1f;
                             p[2] = -1.1f+ k*2.1f;
                             if(r1 == i+1){
-                            p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                                p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                            }
+                            if(c1 == j + 1) {
+                                p = yRotate(p,(float) Math.sin(yAngle),(float)Math.cos(yAngle));
                             }
                             gl.glVertex3f( p[0],p[1],p[2] );
                             p[0] = -3.1f+ i*2.1f;
                             p[1] = -3.1f+ j*2.1f;
                             p[2] = -3.1f+ k*2.1f;
                             if(r1 == i+1){
-                            p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                                p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                            }
+                            if(c1 == j + 1) {
+                                p = yRotate(p,(float) Math.sin(yAngle),(float)Math.cos(yAngle));
                             }
                             gl.glVertex3f( p[0],p[1],p[2] );
                             p[0] = -1.1f+ i*2.1f;
                             p[1] = -3.1f+ j*2.1f;
                             p[2] = -3.1f+ k*2.1f;
                             if(r1 == i+1){
-                            p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                                p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                            }
+                            if(c1 == j + 1) {
+                                p = yRotate(p,(float) Math.sin(yAngle),(float)Math.cos(yAngle));
                             }
                             gl.glVertex3f( p[0],p[1],p[2] );
                         
@@ -202,28 +226,40 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
                             p[1] = -1.1f+ j*2.1f;
                             p[2] = -1.1f+ k*2.1f;
                             if(r1 == i+1){
-                            p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                                p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                            }
+                            if(c1 == j + 1) {
+                                p = yRotate(p,(float) Math.sin(yAngle),(float)Math.cos(yAngle));
                             }
                             gl.glVertex3f( p[0],p[1],p[2] ); // Top Right Of The Quad (Left)
                             p[0] = -3.1f+ i*2.1f;
                             p[1] = -1.1f+ j*2.1f;
                             p[2] = -1.1f+ k*2.1f;
                             if(r1 == i+1){
-                            p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                                p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                            }
+                            if(c1 == j + 1) {
+                                p = yRotate(p,(float) Math.sin(yAngle),(float)Math.cos(yAngle));
                             }
                             gl.glVertex3f( p[0],p[1],p[2] );
                             p[0] = -3.1f+ i*2.1f;
                             p[1] = -3.1f+ j*2.1f;
                             p[2] = -1.1f+ k*2.1f;
                             if(r1 == i+1){
-                            p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                                p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                            }
+                            if(c1 == j + 1) {
+                                p = yRotate(p,(float) Math.sin(yAngle),(float)Math.cos(yAngle));
                             }
                             gl.glVertex3f( p[0],p[1],p[2] );
                             p[0] = -1.1f+ i*2.1f;
                             p[1] = -3.1f+ j*2.1f;
                             p[2] = -1.1f+ k*2.1f;
                             if(r1 == i+1){
-                            p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                                p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                            }
+                            if(c1 == j + 1) {
+                                p = yRotate(p,(float) Math.sin(yAngle),(float)Math.cos(yAngle));
                             }
                             gl.glVertex3f( p[0],p[1],p[2] );
                         
@@ -238,28 +274,40 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
                             p[1] = -3.1f+ j*2.1f;
                             p[2] = -3.1f+ k*2.1f;
                             if(r1 == i+1){
-                            p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                                p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                            }
+                            if(c1 == j + 1) {
+                                p = yRotate(p,(float) Math.sin(yAngle),(float)Math.cos(yAngle));
                             }
                             gl.glVertex3f( p[0],p[1],p[2] ); // Top Right Of The Quad (Left)
                             p[0] = -3.1f+ i*2.1f;
                             p[1] = -3.1f+ j*2.1f;
                             p[2] = -3.1f+ k*2.1f;
                             if(r1 == i+1){
-                            p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                                p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                            }
+                            if(c1 == j + 1) {
+                                p = yRotate(p,(float) Math.sin(yAngle),(float)Math.cos(yAngle));
                             }
                             gl.glVertex3f( p[0],p[1],p[2] );
                             p[0] = -3.1f+ i*2.1f;
                             p[1] = -1.1f+ j*2.1f;
                             p[2] = -3.1f+ k*2.1f;
                             if(r1 == i+1){
-                            p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                                p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                            }
+                            if(c1 == j + 1) {
+                                p = yRotate(p,(float) Math.sin(yAngle),(float)Math.cos(yAngle));
                             }
                             gl.glVertex3f( p[0],p[1],p[2] );
                             p[0] = -1.1f+ i*2.1f;
                             p[1] = -1.1f+ j*2.1f;
                             p[2] = -3.1f+ k*2.1f;
                             if(r1 == i+1){
-                            p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                                p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                            }
+                            if(c1 == j + 1) {
+                                p = yRotate(p,(float) Math.sin(yAngle),(float)Math.cos(yAngle));
                             }
                             gl.glVertex3f( p[0],p[1],p[2] );
                         
@@ -274,28 +322,40 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
                             p[1] = -1.1f+ j*2.1f;
                             p[2] = -1.1f+ k*2.1f;
                             if(r1 == i+1){
-                            p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                                p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                            }
+                            if(c1 == j + 1) {
+                                p = yRotate(p,(float) Math.sin(yAngle),(float)Math.cos(yAngle));
                             }
                             gl.glVertex3f( p[0],p[1],p[2] ); // Top Right Of The Quad (Left)
                             p[0] = -3.1f+ i*2.1f;
                             p[1] = -1.1f+ j*2.1f;
                             p[2] = -3.1f+ k*2.1f;
                             if(r1 == i+1){
-                            p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                                p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                            }
+                            if(c1 == j + 1) {
+                                p = yRotate(p,(float) Math.sin(yAngle),(float)Math.cos(yAngle));
                             }
                             gl.glVertex3f( p[0],p[1],p[2] );
                             p[0] = -3.1f+ i*2.1f;
                             p[1] = -3.1f+ j*2.1f;
                             p[2] = -3.1f+ k*2.1f;
                             if(r1 == i+1){
-                            p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                                p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                            }
+                            if(c1 == j + 1) {
+                                p = yRotate(p,(float) Math.sin(yAngle),(float)Math.cos(yAngle));
                             }
                             gl.glVertex3f( p[0],p[1],p[2] );
                             p[0] = -3.1f+ i*2.1f;
                             p[1] = -3.1f+ j*2.1f;
                             p[2] = -1.1f+ k*2.1f;
                             if(r1 == i+1){
-                            p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                                p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                            }
+                            if(c1 == j + 1) {
+                                p = yRotate(p,(float) Math.sin(yAngle),(float)Math.cos(yAngle));
                             }
                             gl.glVertex3f( p[0],p[1],p[2] );
                         
@@ -310,28 +370,40 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
                             p[1] = -1.1f+ j*2.1f;
                             p[2] = -3.1f+ k*2.1f;
                             if(r1 == i+1){
-                            p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                                p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                            }
+                            if(c1 == j + 1) {
+                                p = yRotate(p,(float) Math.sin(yAngle),(float)Math.cos(yAngle));
                             }
                             gl.glVertex3f( p[0],p[1],p[2] ); // Top Right Of The Quad (Left)
                             p[0] = -1.1f+ i*2.1f;
                             p[1] = -1.1f+ j*2.1f;
                             p[2] = -1.1f+ k*2.1f;
                             if(r1 == i+1){
-                            p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                                p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                            }
+                            if(c1 == j + 1) {
+                                p = yRotate(p,(float) Math.sin(yAngle),(float)Math.cos(yAngle));
                             }
                             gl.glVertex3f( p[0],p[1],p[2] );
                             p[0] = -1.1f+ i*2.1f;
                             p[1] = -3.1f+ j*2.1f;
                             p[2] = -1.1f+ k*2.1f;
                             if(r1 == i+1){
-                            p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                                p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                            }
+                            if(c1 == j + 1) {
+                                p = yRotate(p,(float) Math.sin(yAngle),(float)Math.cos(yAngle));
                             }
                             gl.glVertex3f( p[0],p[1],p[2] );
                             p[0] = -1.1f+ i*2.1f;
                             p[1] = -3.1f+ j*2.1f;
                             p[2] = -3.1f+ k*2.1f;
                             if(r1 == i+1){
-                            p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                                p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                            }
+                            if(c1 == j + 1) {
+                                p = yRotate(p,(float) Math.sin(yAngle),(float)Math.cos(yAngle));
                             }
                             gl.glVertex3f( p[0],p[1],p[2] );
                             
@@ -391,6 +463,22 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
             case KeyEvent.VK_D:
                 r1 = 3;
                 xAngle -= SECTION_ROTATE_ANGLE;
+                break;
+            case KeyEvent.VK_R:
+                c1 = 3;
+                yAngle += SECTION_ROTATE_ANGLE;
+                break;
+            case KeyEvent.VK_F:
+                c1 = 3;
+                yAngle -= SECTION_ROTATE_ANGLE;
+                break;
+            case KeyEvent.VK_T:
+                c1 = 1;
+                yAngle += SECTION_ROTATE_ANGLE;
+                break;
+            case KeyEvent.VK_G:
+                c1 = 1;
+                yAngle -= SECTION_ROTATE_ANGLE;
                 break;
         }
     }
