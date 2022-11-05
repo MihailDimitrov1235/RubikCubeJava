@@ -49,13 +49,15 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
     private float cameraAngleY = DEFAULT_CAMERA_ANGLE_Y;
     private float cameraAngleZ = ZERO_F;
     
-    private float xAngle = 10;
-    private float yAngle = 10;
-    private float zAngle = 10;
-    private int r1 = 1;
-    private int c1 = 1;
-    private int r2 = 1;
-    private int c2 = 1;
+    private static final float SECTION_ROTATE_ANGLE = 1.5699998f;
+    
+    private float xAngle = 0;
+    private float yAngle = 0;
+    private float zAngle = 0;
+    private int r1 = 0;
+    private int c1 = 0;
+    private int r2 = 0;
+    private int c2 = 0;
     private float p[] = {0,0,0};
     
     private int mouseX = CANVAS_WIDTH/2;
@@ -340,7 +342,6 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
         }
         gl.glEnd(); // Done Drawing The Quad
         gl.glFlush();
-        xAngle += 0.1;
     }  
     
     @Override    
@@ -366,7 +367,32 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
     
     @Override
     public void keyPressed(KeyEvent e) {
-        
+        switch(e.getKeyCode()) {
+            case KeyEvent.VK_Q:
+                r1 = 1;
+                xAngle += SECTION_ROTATE_ANGLE;
+                break;
+            case KeyEvent.VK_A:
+                r1 = 1;
+                xAngle -= SECTION_ROTATE_ANGLE;
+                break;
+            case KeyEvent.VK_W:
+                r1 = 2;
+                xAngle += SECTION_ROTATE_ANGLE;
+                break;
+            case KeyEvent.VK_S:
+                r1 = 2;
+                xAngle -= SECTION_ROTATE_ANGLE;
+                break;
+            case KeyEvent.VK_E:
+                r1 = 3;
+                xAngle += SECTION_ROTATE_ANGLE;
+                break;
+            case KeyEvent.VK_D:
+                r1 = 3;
+                xAngle -= SECTION_ROTATE_ANGLE;
+                break;
+        }
     }
     
     @Override
