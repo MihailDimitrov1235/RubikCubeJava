@@ -49,9 +49,43 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
     private float cameraAngleY = DEFAULT_CAMERA_ANGLE_Y;
     private float cameraAngleZ = ZERO_F;
     
+    private float xAngle = 10;
+    private float yAngle = 10;
+    private float zAngle = 10;
+    private int r1 = 1;
+    private int c1 = 1;
+    private int r2 = 1;
+    private int c2 = 1;
+    private float p[] = {0,0,0};
+    
     private int mouseX = CANVAS_WIDTH/2;
     private int mouseY = CANVAS_HEIGHT/2;
    
+    final float[] zRotate(float p[], float sin, float cos) {
+      float temp;
+      temp = cos * p[0] + sin * p[1];
+      p[1] = -sin * p[0] + cos * p[1];
+      p[0] = temp;
+      return p;
+   }
+ 
+   final float[] yRotate(float p[], float sin, float cos) {
+      float temp;
+      temp = cos * p[0] + sin * p[2];
+      p[2] = -sin * p[0] + cos * p[2];
+      p[0] = temp;
+      return p;
+   }
+ 
+   final float[] xRotate(float p[], float sin, float cos) {
+      float temp;
+      temp = cos * p[1] + sin * p[2];
+      p[2] = -sin * p[1] + cos * p[2];
+      p[1] = temp;
+      return p;
+   }
+    
+    
     @Override
     public void init(GLAutoDrawable drawable) {    
         final GL2 gl = drawable.getGL().getGL2();
@@ -82,66 +116,223 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
             for (int j = 0; j < 3; j++) {
                 for (int k = 0; k < 3; k++) {
                     for (int l = 0; l < 6; l++) {
+                        
+                        
                         if(l==0){ //TOP
                             if(j == 2){
-                                gl.glColor3f(1f,0f,0f); //red color TOP
+                                gl.glColor3f(1f,0f,0f); //red
                             }else{
                                 gl.glColor3f(0f,0f,0f);
                             }
-                            gl.glVertex3f(-1.1f + i*2.1f , -1.1f+ j*2.1f, -3.1f+ k*2.1f); // Top Right Of The Quad (Top)
-                            gl.glVertex3f( -3.1f+ i*2.1f, -1.1f+ j*2.1f, -3.1f+ k*2.1f); // Top Left Of The Quad (Top)
-                            gl.glVertex3f( -3.1f+ i*2.1f, -1.1f+ j*2.1f, -1.1f+ k*2.1f ); // Bottom Left Of The Quad (Top)
-                            gl.glVertex3f( -1.1f+ i*2.1f, -1.1f+ j*2.1f, -1.1f+ k*2.1f ); // Bottom Right Of The Quad (Top)
+                            p[0] = -1.1f+ i*2.1f;
+                            p[1] = -1.1f+ j*2.1f;
+                            p[2] = -3.1f+ k*2.1f;
+                            if(r1 == i+1){
+                            p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                            }
+                            gl.glVertex3f( p[0],p[1],p[2] ); // Top Right Of The Quad (Left)
+                            p[0] = -3.1f+ i*2.1f;
+                            p[1] = -1.1f+ j*2.1f;
+                            p[2] = -3.1f+ k*2.1f;
+                            if(r1 == i+1){
+                            p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                            }
+                            gl.glVertex3f( p[0],p[1],p[2] );
+                            p[0] = -3.1f+ i*2.1f;
+                            p[1] = -1.1f+ j*2.1f;
+                            p[2] = -1.1f+ k*2.1f;
+                            if(r1 == i+1){
+                            p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                            }
+                            gl.glVertex3f( p[0],p[1],p[2] );
+                            p[0] = -1.1f+ i*2.1f;
+                            p[1] = -1.1f+ j*2.1f;
+                            p[2] = -1.1f+ k*2.1f;
+                            if(r1 == i+1){
+                            p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                            }
+                            gl.glVertex3f( p[0],p[1],p[2] );
+                        
+                        
                         }else if(l == 1){ //BOTTOM
                             if(j == 0){
                                 gl.glColor3f(0f,1f,0f); //green
                             }else{
                                 gl.glColor3f(0f,0f,0f);
                             }
-                            gl.glVertex3f( -1.1f+ i*2.1f, -3.1f+ j*2.1f, -1.1f+ k*2.1f ); // Top Right Of The Quad
-                            gl.glVertex3f( -3.1f+ i*2.1f, -3.1f+ j*2.1f, -1.1f+ k*2.1f ); // Top Left Of The Quad
-                            gl.glVertex3f( -3.1f+ i*2.1f, -3.1f+ j*2.1f, -3.1f+ k*2.1f ); // Bottom Left Of The Quad
-                            gl.glVertex3f( -1.1f+ i*2.1f, -3.1f+ j*2.1f, -3.1f+ k*2.1f ); // Bottom Right Of The Quad 
+                            p[0] = -1.1f+ i*2.1f;
+                            p[1] = -3.1f+ j*2.1f;
+                            p[2] = -1.1f+ k*2.1f;
+                            if(r1 == i+1){
+                            p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                            }
+                            gl.glVertex3f( p[0],p[1],p[2] ); // Top Right Of The Quad (Left)
+                            p[0] = -3.1f+ i*2.1f;
+                            p[1] = -3.1f+ j*2.1f;
+                            p[2] = -1.1f+ k*2.1f;
+                            if(r1 == i+1){
+                            p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                            }
+                            gl.glVertex3f( p[0],p[1],p[2] );
+                            p[0] = -3.1f+ i*2.1f;
+                            p[1] = -3.1f+ j*2.1f;
+                            p[2] = -3.1f+ k*2.1f;
+                            if(r1 == i+1){
+                            p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                            }
+                            gl.glVertex3f( p[0],p[1],p[2] );
+                            p[0] = -1.1f+ i*2.1f;
+                            p[1] = -3.1f+ j*2.1f;
+                            p[2] = -3.1f+ k*2.1f;
+                            if(r1 == i+1){
+                            p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                            }
+                            gl.glVertex3f( p[0],p[1],p[2] );
+                        
+                        
                         }else if(l == 2){ //FRONT
                             if(k == 2){
                                 gl.glColor3f(0f,0f,1f); //blue
                             }else{
                                 gl.glColor3f(0f,0f,0f);
                             }
-                            gl.glVertex3f( -1.1f+ i*2.1f, -1.1f+ j*2.1f, -1.1f+ k*2.1f ); // Top Right Of The Quad (Front)
-                            gl.glVertex3f( -3.1f+ i*2.1f, -1.1f+ j*2.1f, -1.1f+ k*2.1f ); // Top Left Of The Quad (Front)
-                            gl.glVertex3f( -3.1f+ i*2.1f, -3.1f+ j*2.1f, -1.1f+ k*2.1f ); // Bottom Left Of The Quad
-                            gl.glVertex3f( -1.1f+ i*2.1f, -3.1f+ j*2.1f, -1.1f+ k*2.1f ); // Bottom Right Of The Quad 
+                            p[0] = -1.1f+ i*2.1f;
+                            p[1] = -1.1f+ j*2.1f;
+                            p[2] = -1.1f+ k*2.1f;
+                            if(r1 == i+1){
+                            p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                            }
+                            gl.glVertex3f( p[0],p[1],p[2] ); // Top Right Of The Quad (Left)
+                            p[0] = -3.1f+ i*2.1f;
+                            p[1] = -1.1f+ j*2.1f;
+                            p[2] = -1.1f+ k*2.1f;
+                            if(r1 == i+1){
+                            p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                            }
+                            gl.glVertex3f( p[0],p[1],p[2] );
+                            p[0] = -3.1f+ i*2.1f;
+                            p[1] = -3.1f+ j*2.1f;
+                            p[2] = -1.1f+ k*2.1f;
+                            if(r1 == i+1){
+                            p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                            }
+                            gl.glVertex3f( p[0],p[1],p[2] );
+                            p[0] = -1.1f+ i*2.1f;
+                            p[1] = -3.1f+ j*2.1f;
+                            p[2] = -1.1f+ k*2.1f;
+                            if(r1 == i+1){
+                            p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                            }
+                            gl.glVertex3f( p[0],p[1],p[2] );
+                        
+                        
                         }else if(l == 3){ //BACK
                             if(k == 0){
                                 gl.glColor3f(1f,1f,0f); //yellow
                             }else{
                                 gl.glColor3f(0f,0f,0f);
                             }
-                            gl.glVertex3f( -1.1f+ i*2.1f, -3.1f+ j*2.1f, -3.1f+ k*2.1f ); // Bottom Left Of The Quad
-                            gl.glVertex3f( -3.1f+ i*2.1f, -3.1f+ j*2.1f, -3.1f + k*2.1f); // Bottom Right Of The Quad
-                            gl.glVertex3f( -3.1f+ i*2.1f, -1.1f+ j*2.1f, -3.1f+ k*2.1f ); // Top Right Of The Quad (Back)
-                            gl.glVertex3f( -1.1f+ i*2.1f, -1.1f+ j*2.1f, -3.1f+ k*2.1f ); // Top Left Of The Quad (Back)
+                            p[0] = -1.1f+ i*2.1f;
+                            p[1] = -3.1f+ j*2.1f;
+                            p[2] = -3.1f+ k*2.1f;
+                            if(r1 == i+1){
+                            p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                            }
+                            gl.glVertex3f( p[0],p[1],p[2] ); // Top Right Of The Quad (Left)
+                            p[0] = -3.1f+ i*2.1f;
+                            p[1] = -3.1f+ j*2.1f;
+                            p[2] = -3.1f+ k*2.1f;
+                            if(r1 == i+1){
+                            p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                            }
+                            gl.glVertex3f( p[0],p[1],p[2] );
+                            p[0] = -3.1f+ i*2.1f;
+                            p[1] = -1.1f+ j*2.1f;
+                            p[2] = -3.1f+ k*2.1f;
+                            if(r1 == i+1){
+                            p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                            }
+                            gl.glVertex3f( p[0],p[1],p[2] );
+                            p[0] = -1.1f+ i*2.1f;
+                            p[1] = -1.1f+ j*2.1f;
+                            p[2] = -3.1f+ k*2.1f;
+                            if(r1 == i+1){
+                            p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                            }
+                            gl.glVertex3f( p[0],p[1],p[2] );
+                        
+                        
                         }else if(l == 4){ //LEFT
                             if(i == 0){
                                 gl.glColor3f(1f,0f,1f ); //purple
                             }else{
                                 gl.glColor3f(0f,0f,0f);
                             }
-                            gl.glVertex3f( -3.1f+ i*2.1f, -1.1f+ j*2.1f, -1.1f+ k*2.1f ); // Top Right Of The Quad (Left)
-                            gl.glVertex3f( -3.1f+ i*2.1f, -1.1f+ j*2.1f, -3.1f+ k*2.1f ); // Top Left Of The Quad (Left)
-                            gl.glVertex3f( -3.1f+ i*2.1f, -3.1f+ j*2.1f, -3.1f+ k*2.1f ); // Bottom Left Of The Quad
-                            gl.glVertex3f( -3.1f+ i*2.1f, -3.1f+ j*2.1f, -1.1f+ k*2.1f ); // Bottom Right Of The Quad 
+                            p[0] = -3.1f+ i*2.1f;
+                            p[1] = -1.1f+ j*2.1f;
+                            p[2] = -1.1f+ k*2.1f;
+                            if(r1 == i+1){
+                            p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                            }
+                            gl.glVertex3f( p[0],p[1],p[2] ); // Top Right Of The Quad (Left)
+                            p[0] = -3.1f+ i*2.1f;
+                            p[1] = -1.1f+ j*2.1f;
+                            p[2] = -3.1f+ k*2.1f;
+                            if(r1 == i+1){
+                            p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                            }
+                            gl.glVertex3f( p[0],p[1],p[2] );
+                            p[0] = -3.1f+ i*2.1f;
+                            p[1] = -3.1f+ j*2.1f;
+                            p[2] = -3.1f+ k*2.1f;
+                            if(r1 == i+1){
+                            p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                            }
+                            gl.glVertex3f( p[0],p[1],p[2] );
+                            p[0] = -3.1f+ i*2.1f;
+                            p[1] = -3.1f+ j*2.1f;
+                            p[2] = -1.1f+ k*2.1f;
+                            if(r1 == i+1){
+                            p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                            }
+                            gl.glVertex3f( p[0],p[1],p[2] );
+                        
+                        
                         }else if(l == 5){ //RIGHT
                             if(i == 2){
                                 gl.glColor3f(0f,1f, 1f ); //sky blue
                             }else{
                                 gl.glColor3f(0f,0f,0f);
                             }
-                            gl.glVertex3f( -1.1f+ i*2.1f, -1.1f+ j*2.1f, -3.1f+ k*2.1f ); // Top Right Of The Quad (Right)
-                            gl.glVertex3f( -1.1f+ i*2.1f, -1.1f+ j*2.1f, -1.1f+ k*2.1f ); // Top Left Of The Quad
-                            gl.glVertex3f( -1.1f+ i*2.1f, -3.1f+ j*2.1f, -1.1f+ k*2.1f ); // Bottom Left Of The Quad
-                            gl.glVertex3f( -1.1f+ i*2.1f, -3.1f+ j*2.1f, -3.1f+ k*2.1f ); // Bottom Right Of The Quad
+                            p[0] = -1.1f+ i*2.1f;
+                            p[1] = -1.1f+ j*2.1f;
+                            p[2] = -3.1f+ k*2.1f;
+                            if(r1 == i+1){
+                            p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                            }
+                            gl.glVertex3f( p[0],p[1],p[2] ); // Top Right Of The Quad (Left)
+                            p[0] = -1.1f+ i*2.1f;
+                            p[1] = -1.1f+ j*2.1f;
+                            p[2] = -1.1f+ k*2.1f;
+                            if(r1 == i+1){
+                            p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                            }
+                            gl.glVertex3f( p[0],p[1],p[2] );
+                            p[0] = -1.1f+ i*2.1f;
+                            p[1] = -3.1f+ j*2.1f;
+                            p[2] = -1.1f+ k*2.1f;
+                            if(r1 == i+1){
+                            p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                            }
+                            gl.glVertex3f( p[0],p[1],p[2] );
+                            p[0] = -1.1f+ i*2.1f;
+                            p[1] = -3.1f+ j*2.1f;
+                            p[2] = -3.1f+ k*2.1f;
+                            if(r1 == i+1){
+                            p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                            }
+                            gl.glVertex3f( p[0],p[1],p[2] );
+                            
                         }
                 }
                 }
@@ -149,6 +340,7 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
         }
         gl.glEnd(); // Done Drawing The Quad
         gl.glFlush();
+        xAngle += 0.1;
     }  
     
     @Override    
