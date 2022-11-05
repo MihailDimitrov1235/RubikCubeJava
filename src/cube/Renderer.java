@@ -49,7 +49,7 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
     private float cameraAngleY = DEFAULT_CAMERA_ANGLE_Y;
     private float cameraAngleZ = ZERO_F;
     
-    private static final float SECTION_ROTATE_ANGLE = 1.5699998f;
+    private static final float SECTION_ROTATE_ANGLE = (float) Math.toRadians(90);
     
     private float xAngle = 0;
     private float yAngle = 0;
