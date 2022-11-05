@@ -64,6 +64,14 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
     
     private int mouseX = CANVAS_WIDTH/2;
     private int mouseY = CANVAS_HEIGHT/2;
+    
+    private final String WHITE = "WHITE";
+    private final String YELLOW = "YELLOW";
+    private final String RED = "RED";
+    private final String ORANGE = "ORANGE";
+    private final String GREEN = "GREEN";
+    private final String BLUE = "BLUE";
+    private final String BLACK = "BLACK";
    
     final float[] zRotate(float p[], float sin, float cos) {
       float temp;
@@ -231,9 +239,9 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
                         
                         if(l==0){ //TOP
                             if(j == 2){
-                                gl.glColor3f(1f,0f,0f); //red
+                                this.glColor(gl, WHITE);
                             }else{
-                                gl.glColor3f(0f,0f,0f);
+                                this.glColor(gl, BLACK);
                             }
                             p[0] = cube[i][j][k][0][0][0];
                             p[1] = cube[i][j][k][0][0][1];
@@ -279,9 +287,9 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
                         
                         }else if(l == 1){ //BOTTOM
                             if(j == 0){
-                                gl.glColor3f(0f,1f,0f); //green
+                                this.glColor(gl, YELLOW);
                             }else{
-                                gl.glColor3f(0f,0f,0f);
+                                this.glColor(gl, BLACK);
                             }
                             p[0] = cube[i][j][k][1][0][0];
                             p[1] = cube[i][j][k][1][0][1];
@@ -327,9 +335,9 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
                         
                         }else if(l == 2){ //FRONT
                             if(k == 2){
-                                gl.glColor3f(0f,0f,1f); //blue
+                                this.glColor(gl, BLUE);
                             }else{
-                                gl.glColor3f(0f,0f,0f);
+                                this.glColor(gl, BLACK);
                             }
                             p[0] = cube[i][j][k][2][0][0];
                             p[1] = cube[i][j][k][2][0][1];
@@ -375,9 +383,9 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
                         
                         }else if(l == 3){ //BACK
                             if(k == 0){
-                                gl.glColor3f(1f,1f,0f); //yellow
+                                this.glColor(gl, GREEN);
                             }else{
-                                gl.glColor3f(0f,0f,0f);
+                                this.glColor(gl, BLACK);
                             }
                             p[0] = cube[i][j][k][3][0][0];
                             p[1] = cube[i][j][k][3][0][1];
@@ -423,9 +431,9 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
                         
                         }else if(l == 4){ //LEFT
                             if(i == 0){
-                                gl.glColor3f(1f,0f,1f ); //purple
+                                this.glColor(gl, RED);
                             }else{
-                                gl.glColor3f(0f,0f,0f);
+                                this.glColor(gl, BLACK);
                             }
                             p[0] = cube[i][j][k][4][0][0];
                             p[1] = cube[i][j][k][4][0][1];
@@ -471,9 +479,9 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
                         
                         }else if(l == 5){ //RIGHT
                             if(i == 2){
-                                gl.glColor3f(0f,1f, 1f ); //sky blue
+                                this.glColor(gl, ORANGE);
                             }else{
-                                gl.glColor3f(0f,0f,0f);
+                                this.glColor(gl, BLACK);
                             }
                             p[0] = cube[i][j][k][5][0][0];
                             p[1] = cube[i][j][k][5][0][1];
@@ -523,7 +531,33 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
         }
         gl.glEnd(); // Done Drawing The Quad
         gl.glFlush();
-    }  
+    }
+    
+    private void glColor(GL2 gl, String color) {
+        switch(color) {
+            case WHITE:
+                gl.glColor3f(ONE_F, ONE_F, ONE_F);
+                break;
+            case YELLOW:
+                gl.glColor3f(ONE_F, ONE_F, ZERO_F);
+                break;
+            case RED:
+                gl.glColor3f(ONE_F, ZERO_F, ZERO_F);
+                break;
+            case ORANGE:
+                gl.glColor3f(ONE_F, ONE_F/2, ZERO_F);
+                break;
+            case GREEN:
+                gl.glColor3f(ZERO_F, ONE_F, ZERO_F);
+                break;
+            case BLUE:
+                gl.glColor3f(ZERO_F, ZERO_F, ONE_F);
+                break;
+            case BLACK:
+                gl.glColor3f(0f,0f,0f);
+                break;
+        }
+    }
     
     @Override    
     public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height ) {        
