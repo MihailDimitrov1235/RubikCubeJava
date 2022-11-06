@@ -235,56 +235,22 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
             for (int j = 0; j < 3; j++) {
                 for (int k = 0; k < 3; k++) {
                     for (int l = 0; l < 6; l++) {
-                       
-                        if(l==0){ //TOP
-                            if(j == 2){
-                                this.glColor(gl, WHITE);
-                            }else{
-                                this.glColor(gl, BLACK);
-                            }
-                            
-                            this.smallCubeSection(gl, i, j, k, 0);
-                        }else if(l == 1){ //BOTTOM
-                            if(j == 0){
-                                this.glColor(gl, YELLOW);
-                            }else{
-                                this.glColor(gl, BLACK);
-                            }
-                            
-                            this.smallCubeSection(gl, i, j, k, 1);
-                        }else if(l == 2){ //FRONT
-                            if(k == 2){
-                                this.glColor(gl, BLUE);
-                            }else{
-                                this.glColor(gl, BLACK);
-                            }
-                            
-                            this.smallCubeSection(gl, i, j, k, 2);
-                        }else if(l == 3){ //BACK
-                            if(k == 0){
-                                this.glColor(gl, GREEN);
-                            }else{
-                                this.glColor(gl, BLACK);
-                            }
-                            
-                            this.smallCubeSection(gl, i, j, k, 3);
-                        }else if(l == 4){ //LEFT
-                            if(i == 0){
-                                this.glColor(gl, RED);
-                            }else{
-                                this.glColor(gl, BLACK);
-                            }
-
-                            this.smallCubeSection(gl, i, j, k, 4);
-                        }else if(l == 5){ //RIGHT
-                            if(i == 2){
-                                this.glColor(gl, ORANGE);
-                            }else{
-                                this.glColor(gl, BLACK);
-                            }
-                            
-                            this.smallCubeSection(gl, i, j, k, 5);
+                        if(l==0 && j == 2){ //TOP
+                            this.glColor(gl, WHITE);
+                        }else if(l == 1 && j == 0){ //BOTTOM
+                            this.glColor(gl, YELLOW);
+                        }else if(l == 2 && k == 2){ //FRONT
+                            this.glColor(gl, BLUE);
+                        }else if(l == 3 && k == 0){ //BACK
+                            this.glColor(gl, GREEN);
+                        }else if(l == 4 && i == 0){ //LEFT
+                            this.glColor(gl, RED);
+                        }else if(l == 5 && i == 2){ //RIGHT
+                            this.glColor(gl, ORANGE);
+                        }else{
+                            this.glColor(gl, BLACK);
                         }
+                        this.smallCubeSection(gl, i, j, k, l);
                     }
                 }
             }
@@ -294,54 +260,19 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
     }
     
     private void smallCubeSection(GL2 gl, int i, int j, int k, int side) {
-        p[0] = cube[i][j][k][side][0][0];
-        p[1] = cube[i][j][k][side][0][1];
-        p[2] = cube[i][j][k][side][0][2];
-        
-        if(r1 == i + 1){
-            p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+        for (int l = 0; l < 4; l++) {
+            p[0] = cube[i][j][k][side][l][0];
+            p[1] = cube[i][j][k][side][l][1];
+            p[2] = cube[i][j][k][side][l][2];
+            
+            if(r1 == i + 1){
+                p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+            }
+            if(c1 == j + 1) {
+                p = yRotate(p,(float) Math.sin(yAngle),(float)Math.cos(yAngle));
+            }
+            gl.glVertex3f( p[0],p[1],p[2] );
         }
-        if(c1 == j + 1) {
-            p = yRotate(p,(float) Math.sin(yAngle),(float)Math.cos(yAngle));
-        }
-        
-        gl.glVertex3f( p[0],p[1],p[2] ); // Top Right Of The Quad (Left)
-        p[0] = cube[i][j][k][side][1][0];
-        p[1] = cube[i][j][k][side][1][1];
-        p[2] = cube[i][j][k][side][1][2];
-        
-        if(r1 == i + 1){
-            p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
-        }
-        if(c1 == j + 1) {
-            p = yRotate(p,(float) Math.sin(yAngle),(float)Math.cos(yAngle));
-        }
-        
-        gl.glVertex3f( p[0],p[1],p[2] );
-        p[0] = cube[i][j][k][side][2][0];
-        p[1] = cube[i][j][k][side][2][1];
-        p[2] = cube[i][j][k][side][2][2];
-        
-        if(r1 == i + 1){
-            p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
-        }
-        if(c1 == j + 1) {
-            p = yRotate(p,(float) Math.sin(yAngle),(float)Math.cos(yAngle));
-        }
-        
-        gl.glVertex3f( p[0],p[1],p[2] );
-        p[0] = cube[i][j][k][side][3][0];
-        p[1] = cube[i][j][k][side][3][1];
-        p[2] = cube[i][j][k][side][3][2];
-        
-        if(r1 == i + 1){
-            p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
-        }
-        if(c1 == j + 1) {
-            p = yRotate(p,(float) Math.sin(yAngle),(float)Math.cos(yAngle));
-        }
-        
-        gl.glVertex3f( p[0],p[1],p[2] );
     }
     
     private void glColor(GL2 gl, String color) {
