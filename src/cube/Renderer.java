@@ -354,71 +354,35 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
     @Override
     public void keyPressed(KeyEvent e) {
         switch(e.getKeyCode()) {
-            case KeyEvent.VK_Q:
+            case KeyEvent.VK_Q: // L
                 r1 = 1;
-                xAngle += SECTION_ROTATE_ANGLE; // TOP 0 BOTTOM 1 FRONT 2 BACK 3 LEFT 4 RIGHT 5
-                for (int i = 0; i < 3; i++) {
-                    String c = cubeColors[TOP][r1 - 1][2-i];
-                    cubeColors[TOP][r1 - 1][2-i] = cubeColors[FRONT][r1 - 1][i];
-                    cubeColors[FRONT][r1 - 1][i] = cubeColors[BOTTOM][r1 - 1][i];
-                    cubeColors[BOTTOM][r1 - 1][i] = cubeColors[BACK][r1 - 1][2-i];
-                    cubeColors[BACK][r1 - 1][2-i] = c;
-                }
+                xAngle += SECTION_ROTATE_ANGLE;
+                this.xRotationCounterclockwise();
                 break;
-            case KeyEvent.VK_A:
+            case KeyEvent.VK_A: // L'
                 r1 = 1;
-                for (int i = 0; i < 3; i++) {
-                    String c = cubeColors[TOP][r1 - 1][2-i];
-                    cubeColors[TOP][r1 - 1][2-i] = cubeColors[BACK][r1 - 1][2-i];
-                    cubeColors[BACK][r1 - 1][2-i] = cubeColors[BOTTOM][r1 - 1][2-i];
-                    cubeColors[BOTTOM][r1 - 1][2-i] = cubeColors[FRONT][r1 - 1][2-i];
-                    cubeColors[FRONT][r1 - 1][2-i] = c;
-                }
                 xAngle -= SECTION_ROTATE_ANGLE;
+                this.xRotationClockwise();
                 break;
             case KeyEvent.VK_W:
                 r1 = 2;
                 xAngle += SECTION_ROTATE_ANGLE;
-                for (int i = 0; i < 3; i++) {
-                    String c = cubeColors[TOP][r1 - 1][2-i];
-                    cubeColors[TOP][r1 - 1][2-i] = cubeColors[FRONT][r1 - 1][i];
-                    cubeColors[FRONT][r1 - 1][i] = cubeColors[BOTTOM][r1 - 1][i];
-                    cubeColors[BOTTOM][r1 - 1][i] = cubeColors[BACK][r1 - 1][2-i];
-                    cubeColors[BACK][r1 - 1][2-i] = c;
-                }
+                this.xRotationCounterclockwise();
                 break;
             case KeyEvent.VK_S:
                 r1 = 2;
                 xAngle -= SECTION_ROTATE_ANGLE;
-                for (int i = 0; i < 3; i++) {
-                    String c = cubeColors[TOP][r1 - 1][2-i];
-                    cubeColors[TOP][r1 - 1][2-i] = cubeColors[BACK][r1 - 1][2-i];
-                    cubeColors[BACK][r1 - 1][2-i] = cubeColors[BOTTOM][r1 - 1][2-i];
-                    cubeColors[BOTTOM][r1 - 1][2-i] = cubeColors[FRONT][r1 - 1][2-i];
-                    cubeColors[FRONT][r1 - 1][2-i] = c;
-                }
+                this.xRotationClockwise();
                 break;
-            case KeyEvent.VK_E:
+            case KeyEvent.VK_E: // R
                 r1 = 3;
                 xAngle += SECTION_ROTATE_ANGLE;
-                for (int i = 0; i < 3; i++) {
-                    String c = cubeColors[TOP][r1 - 1][2-i];
-                    cubeColors[TOP][r1 - 1][2-i] = cubeColors[FRONT][r1 - 1][i];
-                    cubeColors[FRONT][r1 - 1][i] = cubeColors[BOTTOM][r1 - 1][i];
-                    cubeColors[BOTTOM][r1 - 1][i] = cubeColors[BACK][r1 - 1][2-i];
-                    cubeColors[BACK][r1 - 1][2-i] = c;
-                }
+                this.xRotationCounterclockwise();
                 break;
-            case KeyEvent.VK_D:
+            case KeyEvent.VK_D: // R'
                 r1 = 3;
                 xAngle -= SECTION_ROTATE_ANGLE;
-                for (int i = 0; i < 3; i++) {
-                    String c = cubeColors[TOP][r1 - 1][2-i];
-                    cubeColors[TOP][r1 - 1][2-i] = cubeColors[BACK][r1 - 1][2-i];
-                    cubeColors[BACK][r1 - 1][2-i] = cubeColors[BOTTOM][r1 - 1][2-i];
-                    cubeColors[BOTTOM][r1 - 1][2-i] = cubeColors[FRONT][r1 - 1][2-i];
-                    cubeColors[FRONT][r1 - 1][2-i] = c;
-                }
+                this.xRotationClockwise();
                 break;
             case KeyEvent.VK_R:
                 c1 = 3;
@@ -436,6 +400,26 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
                 c1 = 1;
                 yAngle -= SECTION_ROTATE_ANGLE;
                 break;
+        }
+    }
+    
+    private void xRotationCounterclockwise() {
+        for (int i = 0; i < 3; i++) {
+            String c = cubeColors[TOP][r1 - 1][2-i];
+            cubeColors[TOP][r1 - 1][2-i] = cubeColors[FRONT][r1 - 1][i];
+            cubeColors[FRONT][r1 - 1][i] = cubeColors[BOTTOM][r1 - 1][i];
+            cubeColors[BOTTOM][r1 - 1][i] = cubeColors[BACK][r1 - 1][2-i];
+            cubeColors[BACK][r1 - 1][2-i] = c;
+        }
+    }
+    
+    private void xRotationClockwise() {
+         for (int i = 0; i < 3; i++) {
+            String c = cubeColors[TOP][r1 - 1][2-i];
+            cubeColors[TOP][r1 - 1][2-i] = cubeColors[BACK][r1 - 1][2-i];
+            cubeColors[BACK][r1 - 1][2-i] = cubeColors[BOTTOM][r1 - 1][2-i];
+            cubeColors[BOTTOM][r1 - 1][2-i] = cubeColors[FRONT][r1 - 1][2-i];
+            cubeColors[FRONT][r1 - 1][2-i] = c;
         }
     }
     
