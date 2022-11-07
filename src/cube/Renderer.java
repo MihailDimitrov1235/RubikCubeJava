@@ -29,6 +29,14 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
     private GLU glu = new GLU();
     
     private static float[][][][][][] cube = new float[3][3][3][6][4][3];
+    private static String[][][] cubeColors = new String[6][3][3];
+    
+    private static final int TOP = 0;
+    private static final int BOTTOM = 1;
+    private static final int FRONT = 2;
+    private static final int BACK = 3;
+    private static final int LEFT = 4;
+    private static final int RIGHT = 5;
     
     private static final int CANVAS_WIDTH  = 640;
     private static final int CANVAS_HEIGHT = 480;
@@ -107,6 +115,25 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
         gl.glEnable( GL2.GL_DEPTH_TEST );
         gl.glDepthFunc( GL2.GL_LEQUAL );
         gl.glHint( GL2.GL_PERSPECTIVE_CORRECTION_HINT, GL2.GL_NICEST );
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 3; j++) {
+                for (int k = 0; k < 3; k++) {
+                    if(i == 0){
+                        cubeColors[i][j][k] = WHITE;
+                    }else if(i == 1){
+                        cubeColors[i][j][k] = YELLOW;
+                    }else if(i == 2){
+                        cubeColors[i][j][k] = BLUE;
+                    }else if(i == 3){
+                        cubeColors[i][j][k] = GREEN;
+                    }else if(i == 4){
+                        cubeColors[i][j][k] = RED;
+                    }else {
+                        cubeColors[i][j][k] = ORANGE;
+                    }
+                }
+            }
+        }
         for (int x = 0; x < 3; x++) {
             for (int y = 0; y < 3; y++) {
                 for (int z = 0; z < 3; z++) {
@@ -231,26 +258,28 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
 	gl.glRotatef(cameraAngleZ, ZERO_F, ZERO_F, ONE_F);
         
         gl.glBegin(GL2.GL_QUADS); // Start Drawing The Cube
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                for (int k = 0; k < 3; k++) {
-                    for (int l = 0; l < 6; l++) {
-                        if(l==0 && j == 2){ //TOP
-                            this.glColor(gl, WHITE);
-                        }else if(l == 1 && j == 0){ //BOTTOM
-                            this.glColor(gl, YELLOW);
-                        }else if(l == 2 && k == 2){ //FRONT
-                            this.glColor(gl, BLUE);
-                        }else if(l == 3 && k == 0){ //BACK
-                            this.glColor(gl, GREEN);
-                        }else if(l == 4 && i == 0){ //LEFT
-                            this.glColor(gl, RED);
-                        }else if(l == 5 && i == 2){ //RIGHT
-                            this.glColor(gl, ORANGE);
+        for (int x = 0; x < 3; x++) {
+            for (int y = 0; y < 3; y++) {
+                for (int z = 0; z < 3; z++) {
+                    for (int side = 0; side < 6; side++) {
+                        
+                        
+                        if(side==0 && y == 2){ //TOP
+                            this.glColor(gl, cubeColors[side][x][z]);
+                        }else if(side == 1 && y == 0){ //BOTTOM
+                            this.glColor(gl, cubeColors[side][x][z]);
+                        }else if(side == 2 && z == 2){ //FRONT
+                            this.glColor(gl, cubeColors[side][x][y]);
+                        }else if(side == 3 && z == 0){ //BACK
+                            this.glColor(gl, cubeColors[side][x][y]);
+                        }else if(side == 4 && x == 0){ //LEFT
+                            this.glColor(gl, cubeColors[side][y][z]);
+                        }else if(side == 5 && x == 2){ //RIGHT
+                            this.glColor(gl, cubeColors[side][y][z]);
                         }else{
                             this.glColor(gl, BLACK);
                         }
-                        this.smallCubeSection(gl, i, j, k, l);
+                        this.smallCubeSection(gl, x, y, z, side);
                     }
                 }
             }
@@ -266,10 +295,10 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
             p[2] = cube[i][j][k][side][l][2];
             
             if(r1 == i + 1){
-                p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+                //p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
             }
             if(c1 == j + 1) {
-                p = yRotate(p,(float) Math.sin(yAngle),(float)Math.cos(yAngle));
+                //p = yRotate(p,(float) Math.sin(yAngle),(float)Math.cos(yAngle));
             }
             gl.glVertex3f( p[0],p[1],p[2] );
         }
@@ -327,27 +356,69 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
         switch(e.getKeyCode()) {
             case KeyEvent.VK_Q:
                 r1 = 1;
-                xAngle += SECTION_ROTATE_ANGLE;
+                xAngle += SECTION_ROTATE_ANGLE; // TOP 0 BOTTOM 1 FRONT 2 BACK 3 LEFT 4 RIGHT 5
+                for (int i = 0; i < 3; i++) {
+                    String c = cubeColors[TOP][r1 - 1][2-i];
+                    cubeColors[TOP][r1 - 1][2-i] = cubeColors[FRONT][r1 - 1][i];
+                    cubeColors[FRONT][r1 - 1][i] = cubeColors[BOTTOM][r1 - 1][i];
+                    cubeColors[BOTTOM][r1 - 1][i] = cubeColors[BACK][r1 - 1][2-i];
+                    cubeColors[BACK][r1 - 1][2-i] = c;
+                }
                 break;
             case KeyEvent.VK_A:
                 r1 = 1;
+                for (int i = 0; i < 3; i++) {
+                    String c = cubeColors[TOP][r1 - 1][2-i];
+                    cubeColors[TOP][r1 - 1][2-i] = cubeColors[BACK][r1 - 1][2-i];
+                    cubeColors[BACK][r1 - 1][2-i] = cubeColors[BOTTOM][r1 - 1][2-i];
+                    cubeColors[BOTTOM][r1 - 1][2-i] = cubeColors[FRONT][r1 - 1][2-i];
+                    cubeColors[FRONT][r1 - 1][2-i] = c;
+                }
                 xAngle -= SECTION_ROTATE_ANGLE;
                 break;
             case KeyEvent.VK_W:
                 r1 = 2;
                 xAngle += SECTION_ROTATE_ANGLE;
+                for (int i = 0; i < 3; i++) {
+                    String c = cubeColors[TOP][r1 - 1][2-i];
+                    cubeColors[TOP][r1 - 1][2-i] = cubeColors[FRONT][r1 - 1][i];
+                    cubeColors[FRONT][r1 - 1][i] = cubeColors[BOTTOM][r1 - 1][i];
+                    cubeColors[BOTTOM][r1 - 1][i] = cubeColors[BACK][r1 - 1][2-i];
+                    cubeColors[BACK][r1 - 1][2-i] = c;
+                }
                 break;
             case KeyEvent.VK_S:
                 r1 = 2;
                 xAngle -= SECTION_ROTATE_ANGLE;
+                for (int i = 0; i < 3; i++) {
+                    String c = cubeColors[TOP][r1 - 1][2-i];
+                    cubeColors[TOP][r1 - 1][2-i] = cubeColors[BACK][r1 - 1][2-i];
+                    cubeColors[BACK][r1 - 1][2-i] = cubeColors[BOTTOM][r1 - 1][2-i];
+                    cubeColors[BOTTOM][r1 - 1][2-i] = cubeColors[FRONT][r1 - 1][2-i];
+                    cubeColors[FRONT][r1 - 1][2-i] = c;
+                }
                 break;
             case KeyEvent.VK_E:
                 r1 = 3;
                 xAngle += SECTION_ROTATE_ANGLE;
+                for (int i = 0; i < 3; i++) {
+                    String c = cubeColors[TOP][r1 - 1][2-i];
+                    cubeColors[TOP][r1 - 1][2-i] = cubeColors[FRONT][r1 - 1][i];
+                    cubeColors[FRONT][r1 - 1][i] = cubeColors[BOTTOM][r1 - 1][i];
+                    cubeColors[BOTTOM][r1 - 1][i] = cubeColors[BACK][r1 - 1][2-i];
+                    cubeColors[BACK][r1 - 1][2-i] = c;
+                }
                 break;
             case KeyEvent.VK_D:
                 r1 = 3;
                 xAngle -= SECTION_ROTATE_ANGLE;
+                for (int i = 0; i < 3; i++) {
+                    String c = cubeColors[TOP][r1 - 1][2-i];
+                    cubeColors[TOP][r1 - 1][2-i] = cubeColors[BACK][r1 - 1][2-i];
+                    cubeColors[BACK][r1 - 1][2-i] = cubeColors[BOTTOM][r1 - 1][2-i];
+                    cubeColors[BOTTOM][r1 - 1][2-i] = cubeColors[FRONT][r1 - 1][2-i];
+                    cubeColors[FRONT][r1 - 1][2-i] = c;
+                }
                 break;
             case KeyEvent.VK_R:
                 c1 = 3;
