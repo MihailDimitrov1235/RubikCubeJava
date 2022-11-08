@@ -66,7 +66,7 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
     private float zAngle = 0;
     private int r1 = 0;
     private int c1 = 0;
-    private int r2 = 0;
+    private int z1 = 0;
     private int c2 = 0;
     private float p[] = {0,0,0};
     
@@ -387,30 +387,44 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
             case KeyEvent.VK_R:
                 c1 = 3;
                 yAngle += SECTION_ROTATE_ANGLE;
+                this.yRotationCounterclockwise();
                 break;
             case KeyEvent.VK_F:
                 c1 = 3;
                 yAngle -= SECTION_ROTATE_ANGLE;
+                this.yRotationClockwise();
                 break;
             case KeyEvent.VK_T:
                 c1 = 1;
                 yAngle += SECTION_ROTATE_ANGLE;
+                this.yRotationClockwise();
                 break;
             case KeyEvent.VK_G:
                 c1 = 1;
                 yAngle -= SECTION_ROTATE_ANGLE;
+                this.yRotationClockwise();
                 break;
         }
     }
     
     private void xRotationCounterclockwise() {
         for (int i = 0; i < 3; i++) {
-            String c = cubeColors[TOP][r1 - 1][2-i];
-            cubeColors[TOP][r1 - 1][2-i] = cubeColors[FRONT][r1 - 1][i];
+            String c = cubeColors[TOP][r1 - 1][i];
+            cubeColors[TOP][r1 - 1][i] = cubeColors[FRONT][r1 - 1][i];
             cubeColors[FRONT][r1 - 1][i] = cubeColors[BOTTOM][r1 - 1][i];
-            cubeColors[BOTTOM][r1 - 1][i] = cubeColors[BACK][r1 - 1][2-i];
-            cubeColors[BACK][r1 - 1][2-i] = c;
+            cubeColors[BOTTOM][r1 - 1][i] = cubeColors[BACK][r1 - 1][i];
+            cubeColors[BACK][r1 - 1][i] = c;
         }
+//        String c = cubeColors[LEFT][0][0];
+//        cubeColors[LEFT][0][0] = cubeColors[LEFT][0][2];
+//        cubeColors[LEFT][0][2] = cubeColors[LEFT][2][2];
+//        cubeColors[LEFT][2][2] = cubeColors[LEFT][2][0];
+//        cubeColors[LEFT][2][0] = c;
+//        c = cubeColors[LEFT][0][1];
+//        cubeColors[LEFT][0][1] = cubeColors[LEFT][1][2];
+//        cubeColors[LEFT][1][2] = cubeColors[LEFT][2][1];
+//        cubeColors[LEFT][2][1] = cubeColors[LEFT][1][0];
+//        cubeColors[LEFT][1][0] = c;
     }
     
     private void xRotationClockwise() {
@@ -420,6 +434,36 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
             cubeColors[BACK][r1 - 1][2-i] = cubeColors[BOTTOM][r1 - 1][2-i];
             cubeColors[BOTTOM][r1 - 1][2-i] = cubeColors[FRONT][r1 - 1][2-i];
             cubeColors[FRONT][r1 - 1][2-i] = c;
+        }
+         String c = cubeColors[LEFT][0][0];
+        cubeColors[LEFT][0][0] = cubeColors[LEFT][0][2];
+        cubeColors[LEFT][0][2] = cubeColors[LEFT][2][2];
+        cubeColors[LEFT][2][2] = cubeColors[LEFT][2][0];
+        cubeColors[LEFT][2][0] = c;
+        c = cubeColors[LEFT][0][1];
+        cubeColors[LEFT][0][1] = cubeColors[LEFT][1][2];
+        cubeColors[LEFT][1][2] = cubeColors[LEFT][2][1];
+        cubeColors[LEFT][2][1] = cubeColors[LEFT][1][0];
+        cubeColors[LEFT][1][0] = c;
+    }
+    
+    private void yRotationCounterclockwise() {
+        for (int i = 0; i < 3; i++) {
+            String c = cubeColors[FRONT][2-i][c1 - 1];
+            cubeColors[FRONT][2-i][c1 - 1] = cubeColors[LEFT][c1 - 1][i];
+            cubeColors[LEFT][c1 - 1][i] = cubeColors[BACK][i][c1 - 1];
+            cubeColors[BACK][i][c1 - 1] = cubeColors[RIGHT][c1 - 1][i];
+            cubeColors[RIGHT][c1 - 1][i] = c;
+        }
+    }
+    
+    private void yRotationClockwise() {
+         for (int i = 0; i < 3; i++) {
+            String c = cubeColors[TOP][c1 - 1][2-i];
+            cubeColors[TOP][c1 - 1][2-i] = cubeColors[BACK][c1 - 1][2-i];
+            cubeColors[BACK][c1 - 1][2-i] = cubeColors[BOTTOM][c1 - 1][2-i];
+            cubeColors[BOTTOM][c1 - 1][2-i] = cubeColors[FRONT][c1 - 1][2-i];
+            cubeColors[FRONT][c1 - 1][2-i] = c;
         }
     }
     
