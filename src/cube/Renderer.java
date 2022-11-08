@@ -293,13 +293,13 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
             p[0] = cube[i][j][k][side][l][0];
             p[1] = cube[i][j][k][side][l][1];
             p[2] = cube[i][j][k][side][l][2];
-            
-            if(r1 == i + 1){
-                //p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
-            }
-            if(c1 == j + 1) {
-                //p = yRotate(p,(float) Math.sin(yAngle),(float)Math.cos(yAngle));
-            }
+//            
+//            if(r1 == i + 1){
+//                //p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+//            }
+//            if(c1 == j + 1) {
+//                //p = yRotate(p,(float) Math.sin(yAngle),(float)Math.cos(yAngle));
+//            }
             gl.glVertex3f( p[0],p[1],p[2] );
         }
     }
@@ -365,14 +365,14 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
                 this.xRotationClockwise();
                 break;
             case KeyEvent.VK_W:
-                r1 = 2;
+                z1 = 3;
                 xAngle += SECTION_ROTATE_ANGLE;
-                this.xRotationCounterclockwise();
+                this.zRotationCounterclockwise();
                 break;
             case KeyEvent.VK_S:
-                r1 = 2;
+                z1 = 3;
                 xAngle -= SECTION_ROTATE_ANGLE;
-                this.xRotationClockwise();
+                this.zRotationClockwise();
                 break;
             case KeyEvent.VK_E: // R
                 r1 = 3;
@@ -385,86 +385,142 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
                 this.xRotationClockwise();
                 break;
             case KeyEvent.VK_R:
-                c1 = 3;
+                c1 = 1;
                 yAngle += SECTION_ROTATE_ANGLE;
-                this.yRotationCounterclockwise();
-                break;
-            case KeyEvent.VK_F:
-                c1 = 3;
-                yAngle -= SECTION_ROTATE_ANGLE;
                 this.yRotationClockwise();
                 break;
-            case KeyEvent.VK_T:
+            case KeyEvent.VK_F:
                 c1 = 1;
+                yAngle -= SECTION_ROTATE_ANGLE;
+                this.yRotationCounterclockwise();
+                break;
+            case KeyEvent.VK_T:
+                c1 = 3;
                 yAngle += SECTION_ROTATE_ANGLE;
                 this.yRotationClockwise();
                 break;
             case KeyEvent.VK_G:
-                c1 = 1;
+                c1 = 3;
                 yAngle -= SECTION_ROTATE_ANGLE;
-                this.yRotationClockwise();
+                this.yRotationCounterclockwise();
                 break;
         }
     }
     
     private void xRotationCounterclockwise() {
         for (int i = 0; i < 3; i++) {
-            String c = cubeColors[TOP][r1 - 1][i];
-            cubeColors[TOP][r1 - 1][i] = cubeColors[FRONT][r1 - 1][i];
+            String c = cubeColors[TOP][r1 - 1][2-i];
+            cubeColors[TOP][r1 - 1][2-i] = cubeColors[FRONT][r1 - 1][i];
             cubeColors[FRONT][r1 - 1][i] = cubeColors[BOTTOM][r1 - 1][i];
-            cubeColors[BOTTOM][r1 - 1][i] = cubeColors[BACK][r1 - 1][i];
-            cubeColors[BACK][r1 - 1][i] = c;
+            cubeColors[BOTTOM][r1 - 1][i] = cubeColors[BACK][r1 - 1][2-i];
+            cubeColors[BACK][r1 - 1][2-i] = c;
         }
-//        String c = cubeColors[LEFT][0][0];
-//        cubeColors[LEFT][0][0] = cubeColors[LEFT][0][2];
-//        cubeColors[LEFT][0][2] = cubeColors[LEFT][2][2];
-//        cubeColors[LEFT][2][2] = cubeColors[LEFT][2][0];
-//        cubeColors[LEFT][2][0] = c;
-//        c = cubeColors[LEFT][0][1];
-//        cubeColors[LEFT][0][1] = cubeColors[LEFT][1][2];
-//        cubeColors[LEFT][1][2] = cubeColors[LEFT][2][1];
-//        cubeColors[LEFT][2][1] = cubeColors[LEFT][1][0];
-//        cubeColors[LEFT][1][0] = c;
+        if(r1 == 1){
+        rotateSideCounterClockwise(LEFT);
+         }else if(r1 == 3){
+        rotateSideCounterClockwise(RIGHT);
+         }
     }
     
     private void xRotationClockwise() {
          for (int i = 0; i < 3; i++) {
-            String c = cubeColors[TOP][r1 - 1][2-i];
-            cubeColors[TOP][r1 - 1][2-i] = cubeColors[BACK][r1 - 1][2-i];
-            cubeColors[BACK][r1 - 1][2-i] = cubeColors[BOTTOM][r1 - 1][2-i];
+            String c = cubeColors[TOP][r1 - 1][i];
+            cubeColors[TOP][r1 - 1][i] = cubeColors[BACK][r1 - 1][i];
+            cubeColors[BACK][r1 - 1][i] = cubeColors[BOTTOM][r1 - 1][2-i];
             cubeColors[BOTTOM][r1 - 1][2-i] = cubeColors[FRONT][r1 - 1][2-i];
             cubeColors[FRONT][r1 - 1][2-i] = c;
         }
-         String c = cubeColors[LEFT][0][0];
-        cubeColors[LEFT][0][0] = cubeColors[LEFT][0][2];
-        cubeColors[LEFT][0][2] = cubeColors[LEFT][2][2];
-        cubeColors[LEFT][2][2] = cubeColors[LEFT][2][0];
-        cubeColors[LEFT][2][0] = c;
-        c = cubeColors[LEFT][0][1];
-        cubeColors[LEFT][0][1] = cubeColors[LEFT][1][2];
-        cubeColors[LEFT][1][2] = cubeColors[LEFT][2][1];
-        cubeColors[LEFT][2][1] = cubeColors[LEFT][1][0];
-        cubeColors[LEFT][1][0] = c;
+         if(r1 == 1){
+        rotateSideClockwise(LEFT);
+         }else if(r1 == 3){
+        rotateSideClockwise(RIGHT);
+         }
     }
     
     private void yRotationCounterclockwise() {
         for (int i = 0; i < 3; i++) {
-            String c = cubeColors[FRONT][2-i][c1 - 1];
-            cubeColors[FRONT][2-i][c1 - 1] = cubeColors[LEFT][c1 - 1][i];
-            cubeColors[LEFT][c1 - 1][i] = cubeColors[BACK][i][c1 - 1];
+            String c = cubeColors[FRONT][2 - i][c1 - 1];
+            cubeColors[FRONT][2 - i][c1 - 1] = cubeColors[LEFT][c1 - 1][2-i];
+            cubeColors[LEFT][c1 - 1][2-i] = cubeColors[BACK][i][c1 - 1];
             cubeColors[BACK][i][c1 - 1] = cubeColors[RIGHT][c1 - 1][i];
             cubeColors[RIGHT][c1 - 1][i] = c;
+        }
+        if(c1 == 1){
+            rotateSideCounterClockwise(BOTTOM);
+        }else if(c1 == 3){
+            rotateSideCounterClockwise(TOP);
         }
     }
     
     private void yRotationClockwise() {
-         for (int i = 0; i < 3; i++) {
-            String c = cubeColors[TOP][c1 - 1][2-i];
-            cubeColors[TOP][c1 - 1][2-i] = cubeColors[BACK][c1 - 1][2-i];
-            cubeColors[BACK][c1 - 1][2-i] = cubeColors[BOTTOM][c1 - 1][2-i];
-            cubeColors[BOTTOM][c1 - 1][2-i] = cubeColors[FRONT][c1 - 1][2-i];
-            cubeColors[FRONT][c1 - 1][2-i] = c;
+        for (int i = 0; i < 3; i++) {
+            String c = cubeColors[FRONT][i][c1 - 1];
+            cubeColors[FRONT][i][c1 - 1] = cubeColors[RIGHT][c1 - 1][2-i];
+            cubeColors[RIGHT][c1 - 1][2-i] = cubeColors[BACK][2-i][c1 - 1];
+            cubeColors[BACK][2-i][c1 - 1] = cubeColors[LEFT][c1 - 1][i];
+            cubeColors[LEFT][c1 - 1][i] = c;
         }
+        if(c1 == 1){
+            rotateSideClockwise(BOTTOM);
+        }else if(c1 == 3){
+            rotateSideClockwise(TOP);
+        }
+    }
+    
+    private void zRotationClockwise() {
+        for (int i = 0; i < 3; i++) {
+            String c = cubeColors[LEFT][i][3 - z1];
+            cubeColors[LEFT][i][3 - z1] = cubeColors[TOP][i][3 - z1];
+            cubeColors[TOP][i][3 - z1] = cubeColors[RIGHT][2-i][3 - z1];
+            cubeColors[RIGHT][2-i][3 - z1] = cubeColors[BOTTOM][2-i][3 - z1];
+            cubeColors[BOTTOM][2-i][3 - z1] = c;
+        }
+        if(z1 == 1){
+            rotateSideClockwise(FRONT);
+        }else if(z1 == 3){
+            rotateSideClockwise(BACK);
+        }
+    }
+    
+    private void zRotationCounterclockwise() {
+        for (int i = 0; i < 3; i++) {
+            String c = cubeColors[LEFT][2-i][3 - z1];
+            cubeColors[LEFT][2-i][3 - z1] = cubeColors[BOTTOM][i][3 - z1];
+            cubeColors[BOTTOM][i][3 - z1] = cubeColors[RIGHT][i][3 - z1];
+            cubeColors[RIGHT][i][3 - z1] = cubeColors[TOP][2-i][3 - z1];
+            cubeColors[TOP][2-i][3 - z1] = c;
+        }
+        if(z1 == 1){
+            rotateSideCounterClockwise(FRONT);
+        }else if(z1 == 3){
+            rotateSideCounterClockwise(BACK);
+        }
+    }
+    
+    private void rotateSideClockwise(int side){
+        String c = cubeColors[side][0][0];
+        cubeColors[side][0][0] = cubeColors[side][0][2];
+        cubeColors[side][0][2] = cubeColors[side][2][2];
+        cubeColors[side][2][2] = cubeColors[side][2][0];
+        cubeColors[side][2][0] = c;
+        c = cubeColors[side][0][1];
+        cubeColors[side][0][1] = cubeColors[side][1][2];
+        cubeColors[side][1][2] = cubeColors[side][2][1];
+        cubeColors[side][2][1] = cubeColors[side][1][0];
+        cubeColors[side][1][0] = c;
+    }
+    
+    private void rotateSideCounterClockwise(int side){
+        String c = cubeColors[side][0][0];
+        cubeColors[side][0][0] = cubeColors[side][2][0];
+        cubeColors[side][2][0] = cubeColors[side][2][2];
+        cubeColors[side][2][2] = cubeColors[side][0][2];
+        cubeColors[side][0][2] = c;
+        c = cubeColors[side][0][1];
+        cubeColors[side][0][1] = cubeColors[side][1][0];
+        cubeColors[side][1][0] = cubeColors[side][2][1];
+        cubeColors[side][2][1] = cubeColors[side][1][2];
+        cubeColors[side][1][2] = c;
     }
     
     @Override
