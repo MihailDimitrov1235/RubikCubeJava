@@ -81,6 +81,7 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
     private final String GREEN = "GREEN";
     private final String BLUE = "BLUE";
     private final String BLACK = "BLACK";
+    private final float ALPHA = 0.65f;
    
     final float[] zRotate(float p[], float sin, float cos) {
       float temp;
@@ -263,42 +264,45 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
 	gl.glRotatef(cameraAngleY, ZERO_F, ONE_F, ZERO_F);
 	gl.glRotatef(cameraAngleZ, ZERO_F, ZERO_F, ONE_F);
         
+        gl.glEnable(GL2.GL_BLEND);
+        gl.glBlendFunc(GL2.GL_SRC_ALPHA, GL2.GL_ONE_MINUS_SRC_ALPHA);
+        
         gl.glBegin(GL2.GL_QUADS); // Start Drawing The Cube
         for (int x = 0; x < 3; x++) {
             for (int y = 0; y < 3; y++) {
                 for (int z = 0; z < 3; z++) {
                     for (int side = 0; side < 6; side++) {
-                        
+
                         
                         if(side==0 && y == 2){ //TOP
                             this.glColor(gl, cubeColors[side][x][z]);
                             if(side == selectedCube[0] && x == selectedCube[1] && z == selectedCube[2]){
-                                this.glColor(gl, BLACK);
+                                this.glSelectedCubeColor(gl, cubeColors[side][x][z]);
                             }
                         }else if(side == 1 && y == 0){ //BOTTOM
                             this.glColor(gl, cubeColors[side][x][z]);
                             if(side == selectedCube[0] && x == selectedCube[1] && z == selectedCube[2]){
-                                this.glColor(gl, BLACK);
+                                 this.glSelectedCubeColor(gl, cubeColors[side][x][z]);
                             }
                         }else if(side == 2 && z == 2){ //FRONT
                             this.glColor(gl, cubeColors[side][x][y]);
                             if(side == selectedCube[0] && x == selectedCube[1] && y == selectedCube[2]){
-                                this.glColor(gl, BLACK);
+                                 this.glSelectedCubeColor(gl, cubeColors[side][x][z]);
                             }
                         }else if(side == 3 && z == 0){ //BACK
                             this.glColor(gl, cubeColors[side][x][y]);
                             if(side == selectedCube[0] && x == selectedCube[1] && y == selectedCube[2]){
-                                this.glColor(gl, BLACK);
+                                 this.glSelectedCubeColor(gl, cubeColors[side][x][z]);
                             }
                         }else if(side == 4 && x == 0){ //LEFT
                             this.glColor(gl, cubeColors[side][y][z]);
                             if(side == selectedCube[0] && y == selectedCube[1] && z == selectedCube[2]){
-                                this.glColor(gl, BLACK);
+                                 this.glSelectedCubeColor(gl, cubeColors[side][x][z]);
                             }
                         }else if(side == 5 && x == 2){ //RIGHT
                             this.glColor(gl, cubeColors[side][y][z]);
                             if(side == selectedCube[0] && y == selectedCube[1] && z == selectedCube[2]){
-                                this.glColor(gl, BLACK);
+                                 this.glSelectedCubeColor(gl, cubeColors[side][x][z]);
                             }
                         }else{
                             this.glColor(gl, BLACK);
@@ -350,6 +354,29 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
                 break;
             case BLACK:
                 gl.glColor3f(0f,0f,0f);
+                break;
+        }
+    }
+    
+    private void glSelectedCubeColor(GL2 gl, String color) {
+        switch(color) {
+            case WHITE:
+                gl.glColor4f(ONE_F, ONE_F, ONE_F, 0.8f);
+                break;
+            case YELLOW:
+                gl.glColor4f(ONE_F, ONE_F, ZERO_F, ALPHA);
+                break;
+            case RED:
+                gl.glColor4f(ONE_F, ZERO_F, ZERO_F, ALPHA);
+                break;
+            case ORANGE:
+                gl.glColor4f(ONE_F, ONE_F/2, ZERO_F, ALPHA);
+                break;
+            case GREEN:
+                gl.glColor4f(ZERO_F, ONE_F, ZERO_F, ALPHA);
+                break;
+            case BLUE:
+                gl.glColor4f(ZERO_F, ZERO_F, ONE_F, ALPHA);
                 break;
         }
     }
