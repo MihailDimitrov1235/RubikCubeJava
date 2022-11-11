@@ -31,6 +31,7 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
     private static float[][][][][][] cube = new float[3][3][3][6][4][3];
     private static String[][][] cubeColors = new String[6][3][3];
     private static int[] selectedCube = new int[3];
+    private static float offset = 0.05f;
     
     private static final int TOP = 0;
     private static final int BOTTOM = 1;
@@ -80,6 +81,7 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
     private final String ORANGE = "ORANGE";
     private final String GREEN = "GREEN";
     private final String BLUE = "BLUE";
+    private final String PURPLE = "PURPLE";
     private final String BLACK = "BLACK";
     private final float ALPHA = 0.65f;
    
@@ -284,42 +286,53 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
             for (int y = 0; y < 3; y++) {
                 for (int z = 0; z < 3; z++) {
                     for (int side = 0; side < 6; side++) {
-
+                        
+                        boolean selected = false;
                         
                         if(side==0 && y == 2){ //TOP
                             this.glColor(gl, cubeColors[side][x][z]);
                             if(side == selectedCube[0] && x == selectedCube[1] && z == selectedCube[2]){
                                 this.glSelectedCubeColor(gl, cubeColors[side][x][z]);
+                                selected = true;
                             }
                         }else if(side == 1 && y == 0){ //BOTTOM
                             this.glColor(gl, cubeColors[side][x][z]);
                             if(side == selectedCube[0] && x == selectedCube[1] && z == selectedCube[2]){
                                  this.glSelectedCubeColor(gl, cubeColors[side][x][z]);
+                                 selected = true;
                             }
                         }else if(side == 2 && z == 2){ //FRONT
                             this.glColor(gl, cubeColors[side][x][y]);
                             if(side == selectedCube[0] && x == selectedCube[1] && y == selectedCube[2]){
                                  this.glSelectedCubeColor(gl, cubeColors[side][x][z]);
+                                 selected = true;
                             }
                         }else if(side == 3 && z == 0){ //BACK
                             this.glColor(gl, cubeColors[side][x][y]);
                             if(side == selectedCube[0] && x == selectedCube[1] && y == selectedCube[2]){
                                  this.glSelectedCubeColor(gl, cubeColors[side][x][z]);
+                                 selected = true;
                             }
                         }else if(side == 4 && x == 0){ //LEFT
                             this.glColor(gl, cubeColors[side][y][z]);
                             if(side == selectedCube[0] && y == selectedCube[1] && z == selectedCube[2]){
                                  this.glSelectedCubeColor(gl, cubeColors[side][x][z]);
+                                 selected = true;
                             }
                         }else if(side == 5 && x == 2){ //RIGHT
                             this.glColor(gl, cubeColors[side][y][z]);
                             if(side == selectedCube[0] && y == selectedCube[1] && z == selectedCube[2]){
                                  this.glSelectedCubeColor(gl, cubeColors[side][x][z]);
+                                 selected = true;
                             }
                         }else{
                             this.glColor(gl, BLACK);
                         }
                         this.smallCubeSection(gl, x, y, z, side);
+                        if(selected){
+                            this.glColor(gl, PURPLE);
+                            this.drawBorder(gl, x, y, z, side);
+                        }
                     }
                 }
             }
@@ -327,7 +340,99 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
         gl.glEnd(); // Done Drawing The Quad
         gl.glFlush();
     }
-    
+    private void drawBorder(GL2 gl, int i, int j, int k, int side){
+        if(side == TOP){
+            for (int l = 0; l < 4; l++) {
+            p[0] = cube[i][j][k][side][l][0];
+            p[1] = cube[i][j][k][side][l][1];
+            p[2] = cube[i][j][k][side][l][2];
+            if(l == 0){
+                gl.glVertex3f( p[0]+offset,p[1]-0.01f,p[2]-offset );//topleft
+            }else if(l == 1){
+                gl.glVertex3f( p[0]-offset,p[1]-0.01f,p[2]-offset );//topright
+            }else if(l == 2){
+                gl.glVertex3f( p[0]-offset,p[1]-0.01f,p[2]+offset );//bottomleft
+            }else{
+                gl.glVertex3f( p[0]+offset,p[1]-0.01f,p[2]+offset );//bottomright
+            }
+            }
+        }else if(side == BOTTOM){
+            for (int l = 0; l < 4; l++) {
+            p[0] = cube[i][j][k][side][l][0];
+            p[1] = cube[i][j][k][side][l][1];
+            p[2] = cube[i][j][k][side][l][2];
+            if(l == 0){
+                gl.glVertex3f( p[0]+offset,p[1]+0.01f,p[2]+offset );//topleft
+            }else if(l == 1){
+                gl.glVertex3f( p[0]-offset,p[1]+0.01f,p[2]+offset );//topright
+            }else if(l == 2){
+                gl.glVertex3f( p[0]-offset,p[1]+0.01f,p[2]-offset );//bottomleft
+            }else{
+                gl.glVertex3f( p[0]+offset,p[1]+0.01f,p[2]-offset );//bottomright
+            }
+            }
+        }else if(side == FRONT){
+            for (int l = 0; l < 4; l++) {
+            p[0] = cube[i][j][k][side][l][0];
+            p[1] = cube[i][j][k][side][l][1];
+            p[2] = cube[i][j][k][side][l][2];
+            if(l == 0){
+                gl.glVertex3f( p[0]+offset,p[1]+offset,p[2]-0.01f );//topleft
+            }else if(l == 1){
+                gl.glVertex3f( p[0]-offset,p[1]+offset,p[2]-0.01f );//topright
+            }else if(l == 2){
+                gl.glVertex3f( p[0]-offset,p[1]-offset,p[2]-0.01f );//bottomleft
+            }else{
+                gl.glVertex3f( p[0]+offset,p[1]-offset,p[2]-0.01f );//bottomright
+            }
+            }
+        }else if(side == BACK){
+            for (int l = 0; l < 4; l++) {
+            p[0] = cube[i][j][k][side][l][0];
+            p[1] = cube[i][j][k][side][l][1];
+            p[2] = cube[i][j][k][side][l][2];
+            if(l == 0){
+                gl.glVertex3f( p[0]+offset,p[1]-offset,p[2]+0.01f );//topleft
+            }else if(l == 1){
+                gl.glVertex3f( p[0]-offset,p[1]-offset,p[2]+0.01f );//topright
+            }else if(l == 2){
+                gl.glVertex3f( p[0]-offset,p[1]+offset,p[2]+0.01f );//bottomleft
+            }else{
+                gl.glVertex3f( p[0]+offset,p[1]+offset,p[2]+0.01f );//bottomright
+            }
+            }
+        }else if(side == LEFT){
+            for (int l = 0; l < 4; l++) {
+            p[0] = cube[i][j][k][side][l][0];
+            p[1] = cube[i][j][k][side][l][1];
+            p[2] = cube[i][j][k][side][l][2];
+            if(l == 0){
+                gl.glVertex3f( p[0]+0.01f,p[1]+offset,p[2]+offset );//topleft
+            }else if(l == 1){
+                gl.glVertex3f( p[0]+0.01f,p[1]+offset,p[2]-offset );//topright
+            }else if(l == 2){
+                gl.glVertex3f( p[0]+0.01f,p[1]-offset,p[2]-offset );//bottomleft
+            }else{
+                gl.glVertex3f( p[0]+0.01f,p[1]-offset,p[2]+offset );//bottomright
+            }
+            }
+        }else if(side == RIGHT){
+            for (int l = 0; l < 4; l++) {
+            p[0] = cube[i][j][k][side][l][0];
+            p[1] = cube[i][j][k][side][l][1];
+            p[2] = cube[i][j][k][side][l][2];
+            if(l == 0){
+                gl.glVertex3f( p[0]-0.01f,p[1]+offset,p[2]-offset );//topleft
+            }else if(l == 1){
+                gl.glVertex3f( p[0]-0.01f,p[1]+offset,p[2]+offset );//topright
+            }else if(l == 2){
+                gl.glVertex3f( p[0]-0.01f,p[1]-offset,p[2]+offset );//bottomleft
+            }else{
+                gl.glVertex3f( p[0]-0.01f,p[1]-offset,p[2]-offset );//bottomright
+            }
+            }
+        }
+    }
     private void smallCubeSection(GL2 gl, int i, int j, int k, int side) {
         for (int l = 0; l < 4; l++) {
             p[0] = cube[i][j][k][side][l][0];
@@ -363,6 +468,9 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
                 break;
             case BLUE:
                 gl.glColor3f(ZERO_F, ZERO_F, ONE_F);
+                break;
+            case PURPLE:
+                gl.glColor3f(ONE_F, ZERO_F, ONE_F);
                 break;
             case BLACK:
                 gl.glColor3f(0f,0f,0f);
