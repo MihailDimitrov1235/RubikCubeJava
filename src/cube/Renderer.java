@@ -624,8 +624,34 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
                 }
                 break;
             case KeyEvent.VK_LEFT:
+                if(selectedCube[0] == TOP) {
+                    this.zRotationClockwise(3 - selectedCube[2]);
+                }else if(selectedCube[0] == LEFT) {
+                    this.yRotationClockwise(selectedCube[1] + 1);
+                }else if(selectedCube[0] == RIGHT) {
+                    this.yRotationClockwise(selectedCube[1] + 1);
+                }else if(selectedCube[0] == FRONT) {
+                    this.yRotationClockwise(selectedCube[2] + 1);
+                }else if(selectedCube[0] == BACK) {
+                    this.yRotationClockwise(selectedCube[2] + 1);
+                }else if(selectedCube[0] == BOTTOM) {
+                    this.zRotationCounterclockwise(3 - selectedCube[2]);
+                }
                 break;
             case KeyEvent.VK_RIGHT:
+                if(selectedCube[0] == TOP) {
+                    this.zRotationCounterclockwise(3 - selectedCube[2]);
+                }else if(selectedCube[0] == LEFT) {
+                    this.yRotationCounterclockwise(selectedCube[1] + 1);
+                }else if(selectedCube[0] == RIGHT) {
+                    this.yRotationCounterclockwise(selectedCube[1] + 1);
+                }else if(selectedCube[0] == FRONT) {
+                    this.yRotationCounterclockwise(selectedCube[2] + 1);
+                }else if(selectedCube[0] == BACK) {
+                    this.yRotationCounterclockwise(selectedCube[2] + 1);
+                }else if(selectedCube[0] == BOTTOM) {
+                    this.zRotationClockwise(3 - selectedCube[2]);
+                }
                 break;
         }
     }
