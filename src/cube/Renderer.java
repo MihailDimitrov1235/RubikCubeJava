@@ -702,7 +702,9 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
         for(int i = 0; i < 20; i++) {
             java.util.Random rand = new java.util.Random();
             int num = rand.nextInt(rotateActions.length);
-            rotateActions[num].rotate(rand.nextInt((3 - 1) + 1) + 1);
+            int rotateNum = rand.nextInt(2);
+            int rotateSide = rotateNum == 0 ? 3 : 1;
+            rotateActions[num].rotate(rotateSide);
         }
     }
     
