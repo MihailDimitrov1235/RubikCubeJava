@@ -107,6 +107,18 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
       return p;
     }
     
+   interface Rotation {
+        void rotate(int n);
+   }
+   
+   private final Rotation[] rotateActions = new Rotation[] {
+        new Rotation() {@Override public void rotate(int n) { xRotationCounterclockwise(n); } },
+        new Rotation() {@Override public void rotate(int n) { xRotationClockwise(n); } },
+        new Rotation() {@Override public void rotate(int n) { yRotationCounterclockwise(n); } },
+        new Rotation() {@Override public void rotate(int n) { yRotationClockwise(n); } },
+        new Rotation() {@Override public void rotate(int n) { zRotationClockwise(n); } },
+        new Rotation() {@Override public void rotate(int n) { zRotationCounterclockwise(n); } },
+    };
     
     @Override
     public void init(GLAutoDrawable drawable) {    
@@ -680,6 +692,17 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
                     this.zRotationClockwise(3 - selectedCube[2]);
                 }
                 break;
+            case KeyEvent.VK_Z:
+                this.scramble();
+                break;
+        }
+    }
+    
+    public void scramble() {
+        for(int i = 0; i < 20; i++) {
+            java.util.Random rand = new java.util.Random();
+            int num = rand.nextInt(rotateActions.length);
+            rotateActions[num].rotate(rand.nextInt((3 - 1) + 1) + 1);
         }
     }
     
