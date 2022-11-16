@@ -32,6 +32,9 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
     private static String[][][] cubeColors = new String[6][3][3];
     private static int[] selectedCube = new int[3];
     private static float offset = 0.05f;
+    private static boolean rotating = false;
+    private static float rotateAngle = 0.05f;
+    private static boolean opposite;
     
     private static final int TOP = 0;
     private static final int BOTTOM = 1;
@@ -66,10 +69,9 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
     private float xAngle = 0;
     private float yAngle = 0;
     private float zAngle = 0;
-    private int r1 = 0;
-    private int c1 = 0;
+    private int x1 = 0;
+    private int y1 = 0;
     private int z1 = 0;
-    private int c2 = 0;
     private float p[] = {0,0,0};
     
     private int mouseX = CANVAS_WIDTH/2;
@@ -304,25 +306,25 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
                         }else if(side == 2 && z == 2){ //FRONT
                             this.glColor(gl, cubeColors[side][x][y]);
                             if(side == selectedCube[0] && x == selectedCube[1] && y == selectedCube[2]){
-                                 this.glSelectedCubeColor(gl, cubeColors[side][x][z]);
+                                 this.glSelectedCubeColor(gl, cubeColors[side][x][y]);
                                  selected = true;
                             }
                         }else if(side == 3 && z == 0){ //BACK
                             this.glColor(gl, cubeColors[side][x][y]);
                             if(side == selectedCube[0] && x == selectedCube[1] && y == selectedCube[2]){
-                                 this.glSelectedCubeColor(gl, cubeColors[side][x][z]);
+                                 this.glSelectedCubeColor(gl, cubeColors[side][x][y]);
                                  selected = true;
                             }
                         }else if(side == 4 && x == 0){ //LEFT
                             this.glColor(gl, cubeColors[side][y][z]);
                             if(side == selectedCube[0] && y == selectedCube[1] && z == selectedCube[2]){
-                                 this.glSelectedCubeColor(gl, cubeColors[side][x][z]);
+                                 this.glSelectedCubeColor(gl, cubeColors[side][y][z]);
                                  selected = true;
                             }
                         }else if(side == 5 && x == 2){ //RIGHT
                             this.glColor(gl, cubeColors[side][y][z]);
                             if(side == selectedCube[0] && y == selectedCube[1] && z == selectedCube[2]){
-                                 this.glSelectedCubeColor(gl, cubeColors[side][x][z]);
+                                 this.glSelectedCubeColor(gl, cubeColors[side][y][z]);
                                  selected = true;
                             }
                         }else{
@@ -332,6 +334,59 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
                         if(selected){
                             this.glColor(gl, PURPLE);
                             this.drawBorder(gl, x, y, z, side);
+                        }
+                        if(x1 != 0){
+                            if(opposite){
+                                xAngle -= Math.toRadians(rotateAngle);
+                            }else{
+                                xAngle += Math.toRadians(rotateAngle);
+                            }
+                            if(Math.toDegrees(Math.abs(xAngle)) >= 90) {
+                                xAngle = 0;
+                                x1 = 0;
+                                if(selectedCube[0] == TOP) {
+                                    //x1 = selectedCube[1] + 1;
+                                    this.xRotationCounterclockwise(selectedCube[1] + 1);
+                                }else if(selectedCube[0] == FRONT) {
+                                    this.xRotationCounterclockwise(selectedCube[1] + 1);
+                                    //x1 = selectedCube[1] + 1;
+                                }else if(selectedCube[0] == BACK) {
+                                    this.xRotationClockwise(selectedCube[1] + 1);
+                                    //x1 = selectedCube[1] + 1;
+                                }else if(selectedCube[0] == BOTTOM) {
+                                    this.xRotationCounterclockwise(selectedCube[1] + 1);
+                                    //x1 = selectedCube[1] + 1;
+                                }
+                            }
+                        }
+                        if(y1 != 0){
+                            if(opposite){
+                                yAngle -= Math.toRadians(rotateAngle);
+                            }else{
+                                yAngle += Math.toRadians(rotateAngle);
+                            }
+                             if(Math.toDegrees(Math.abs(yAngle)) >= 90) {
+                                yAngle = 0;
+                                y1 = 0;
+                            }
+                        }
+                        if(z1 != 0){
+                            if(opposite){
+                                zAngle -= Math.toRadians(rotateAngle);
+                            }else{
+                                zAngle += Math.toRadians(rotateAngle);
+                            }
+                            if(Math.toDegrees(Math.abs(zAngle)) >= 90) {
+                                zAngle = 0;
+                                z1 = 0;
+                                if(selectedCube[0] == LEFT) {
+                                    this.zRotationCounterclockwise(3 - selectedCube[2]);
+                                    //z1 = selectedCube[2] + 1;
+                                }else if(selectedCube[0] == RIGHT) {
+                                    this.zRotationClockwise(3 - selectedCube[2]);
+                                    //z1 = selectedCube[2] + 1;
+                                }
+                            }
                         }
                     }
                 }
@@ -343,108 +398,119 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
     private void drawBorder(GL2 gl, int i, int j, int k, int side){
         if(side == TOP){
             for (int l = 0; l < 4; l++) {
-            p[0] = cube[i][j][k][side][l][0];
-            p[1] = cube[i][j][k][side][l][1];
-            p[2] = cube[i][j][k][side][l][2];
-            if(l == 0){
-                gl.glVertex3f( p[0]+offset,p[1]-0.01f,p[2]-offset );//topleft
-            }else if(l == 1){
-                gl.glVertex3f( p[0]-offset,p[1]-0.01f,p[2]-offset );//topright
-            }else if(l == 2){
-                gl.glVertex3f( p[0]-offset,p[1]-0.01f,p[2]+offset );//bottomleft
-            }else{
-                gl.glVertex3f( p[0]+offset,p[1]-0.01f,p[2]+offset );//bottomright
-            }
+                p[0] = cube[i][j][k][side][l][0];
+                p[1] = cube[i][j][k][side][l][1];
+                p[2] = cube[i][j][k][side][l][2];
+                p = zRotate(p,(float) Math.sin(yAngle),(float)Math.cos(yAngle));
+                if(l == 0){
+                    gl.glVertex3f( p[0]+offset,p[1]-0.01f,p[2]-offset );//topleft
+                }else if(l == 1){
+                    gl.glVertex3f( p[0]-offset,p[1]-0.01f,p[2]-offset );//topright
+                }else if(l == 2){
+                    gl.glVertex3f( p[0]-offset,p[1]-0.01f,p[2]+offset );//bottomleft
+                }else{
+                    gl.glVertex3f( p[0]+offset,p[1]-0.01f,p[2]+offset );//bottomright
+                }
             }
         }else if(side == BOTTOM){
             for (int l = 0; l < 4; l++) {
-            p[0] = cube[i][j][k][side][l][0];
-            p[1] = cube[i][j][k][side][l][1];
-            p[2] = cube[i][j][k][side][l][2];
-            if(l == 0){
-                gl.glVertex3f( p[0]+offset,p[1]+0.01f,p[2]+offset );//topleft
-            }else if(l == 1){
-                gl.glVertex3f( p[0]-offset,p[1]+0.01f,p[2]+offset );//topright
-            }else if(l == 2){
-                gl.glVertex3f( p[0]-offset,p[1]+0.01f,p[2]-offset );//bottomleft
-            }else{
-                gl.glVertex3f( p[0]+offset,p[1]+0.01f,p[2]-offset );//bottomright
-            }
+                p[0] = cube[i][j][k][side][l][0];
+                p[1] = cube[i][j][k][side][l][1];
+                p[2] = cube[i][j][k][side][l][2];
+                p = zRotate(p,(float) Math.sin(yAngle),(float)Math.cos(yAngle));
+                if(l == 0){
+                    gl.glVertex3f( p[0]+offset,p[1]+0.01f,p[2]+offset );//topleft
+                }else if(l == 1){
+                    gl.glVertex3f( p[0]-offset,p[1]+0.01f,p[2]+offset );//topright
+                }else if(l == 2){
+                    gl.glVertex3f( p[0]-offset,p[1]+0.01f,p[2]-offset );//bottomleft
+                }else{
+                    gl.glVertex3f( p[0]+offset,p[1]+0.01f,p[2]-offset );//bottomright
+                }
             }
         }else if(side == FRONT){
             for (int l = 0; l < 4; l++) {
-            p[0] = cube[i][j][k][side][l][0];
-            p[1] = cube[i][j][k][side][l][1];
-            p[2] = cube[i][j][k][side][l][2];
-            if(l == 0){
-                gl.glVertex3f( p[0]+offset,p[1]+offset,p[2]-0.01f );//topleft
-            }else if(l == 1){
-                gl.glVertex3f( p[0]-offset,p[1]+offset,p[2]-0.01f );//topright
-            }else if(l == 2){
-                gl.glVertex3f( p[0]-offset,p[1]-offset,p[2]-0.01f );//bottomleft
-            }else{
-                gl.glVertex3f( p[0]+offset,p[1]-offset,p[2]-0.01f );//bottomright
-            }
+                p[0] = cube[i][j][k][side][l][0];
+                p[1] = cube[i][j][k][side][l][1];
+                p[2] = cube[i][j][k][side][l][2];
+                p = zRotate(p,(float) Math.sin(yAngle),(float)Math.cos(yAngle));
+                if(l == 0){
+                    gl.glVertex3f( p[0]+offset,p[1]+offset,p[2]-0.01f );//topleft
+                }else if(l == 1){
+                    gl.glVertex3f( p[0]-offset,p[1]+offset,p[2]-0.01f );//topright
+                }else if(l == 2){
+                    gl.glVertex3f( p[0]-offset,p[1]-offset,p[2]-0.01f );//bottomleft
+                }else{
+                    gl.glVertex3f( p[0]+offset,p[1]-offset,p[2]-0.01f );//bottomright
+                }
             }
         }else if(side == BACK){
             for (int l = 0; l < 4; l++) {
-            p[0] = cube[i][j][k][side][l][0];
-            p[1] = cube[i][j][k][side][l][1];
-            p[2] = cube[i][j][k][side][l][2];
-            if(l == 0){
-                gl.glVertex3f( p[0]+offset,p[1]-offset,p[2]+0.01f );//topleft
-            }else if(l == 1){
-                gl.glVertex3f( p[0]-offset,p[1]-offset,p[2]+0.01f );//topright
-            }else if(l == 2){
-                gl.glVertex3f( p[0]-offset,p[1]+offset,p[2]+0.01f );//bottomleft
-            }else{
-                gl.glVertex3f( p[0]+offset,p[1]+offset,p[2]+0.01f );//bottomright
-            }
+                p[0] = cube[i][j][k][side][l][0];
+                p[1] = cube[i][j][k][side][l][1];
+                p[2] = cube[i][j][k][side][l][2];
+                p = zRotate(p,(float) Math.sin(yAngle),(float)Math.cos(yAngle));
+                if(l == 0){
+                    gl.glVertex3f( p[0]+offset,p[1]-offset,p[2]+0.01f );//topleft
+                }else if(l == 1){
+                    gl.glVertex3f( p[0]-offset,p[1]-offset,p[2]+0.01f );//topright
+                }else if(l == 2){
+                    gl.glVertex3f( p[0]-offset,p[1]+offset,p[2]+0.01f );//bottomleft
+                }else{
+                    gl.glVertex3f( p[0]+offset,p[1]+offset,p[2]+0.01f );//bottomright
+                }
             }
         }else if(side == LEFT){
             for (int l = 0; l < 4; l++) {
-            p[0] = cube[i][j][k][side][l][0];
-            p[1] = cube[i][j][k][side][l][1];
-            p[2] = cube[i][j][k][side][l][2];
-            if(l == 0){
-                gl.glVertex3f( p[0]+0.01f,p[1]+offset,p[2]+offset );//topleft
-            }else if(l == 1){
-                gl.glVertex3f( p[0]+0.01f,p[1]+offset,p[2]-offset );//topright
-            }else if(l == 2){
-                gl.glVertex3f( p[0]+0.01f,p[1]-offset,p[2]-offset );//bottomleft
-            }else{
-                gl.glVertex3f( p[0]+0.01f,p[1]-offset,p[2]+offset );//bottomright
-            }
+                p[0] = cube[i][j][k][side][l][0];
+                p[1] = cube[i][j][k][side][l][1];
+                p[2] = cube[i][j][k][side][l][2];
+                p = zRotate(p,(float) Math.sin(yAngle),(float)Math.cos(yAngle));
+                if(l == 0){
+                    gl.glVertex3f( p[0]+0.01f,p[1]+offset,p[2]+offset );//topleft
+                }else if(l == 1){
+                    gl.glVertex3f( p[0]+0.01f,p[1]+offset,p[2]-offset );//topright
+                }else if(l == 2){
+                    gl.glVertex3f( p[0]+0.01f,p[1]-offset,p[2]-offset );//bottomleft
+                }else{
+                    gl.glVertex3f( p[0]+0.01f,p[1]-offset,p[2]+offset );//bottomright
+                }
             }
         }else if(side == RIGHT){
             for (int l = 0; l < 4; l++) {
-            p[0] = cube[i][j][k][side][l][0];
-            p[1] = cube[i][j][k][side][l][1];
-            p[2] = cube[i][j][k][side][l][2];
-            if(l == 0){
-                gl.glVertex3f( p[0]-0.01f,p[1]+offset,p[2]-offset );//topleft
-            }else if(l == 1){
-                gl.glVertex3f( p[0]-0.01f,p[1]+offset,p[2]+offset );//topright
-            }else if(l == 2){
-                gl.glVertex3f( p[0]-0.01f,p[1]-offset,p[2]+offset );//bottomleft
-            }else{
-                gl.glVertex3f( p[0]-0.01f,p[1]-offset,p[2]-offset );//bottomright
-            }
+                p[0] = cube[i][j][k][side][l][0];
+                p[1] = cube[i][j][k][side][l][1];
+                p[2] = cube[i][j][k][side][l][2];
+                p = zRotate(p,(float) Math.sin(yAngle),(float)Math.cos(yAngle));
+                if(l == 0){
+                    gl.glVertex3f( p[0]-0.01f,p[1]+offset,p[2]-offset );//topleft
+                }else if(l == 1){
+                    gl.glVertex3f( p[0]-0.01f,p[1]+offset,p[2]+offset );//topright
+                }else if(l == 2){
+                    gl.glVertex3f( p[0]-0.01f,p[1]-offset,p[2]+offset );//bottomleft
+                }else{
+                    gl.glVertex3f( p[0]-0.01f,p[1]-offset,p[2]-offset );//bottomright
+                }
             }
         }
+        
     }
     private void smallCubeSection(GL2 gl, int i, int j, int k, int side) {
         for (int l = 0; l < 4; l++) {
             p[0] = cube[i][j][k][side][l][0];
             p[1] = cube[i][j][k][side][l][1];
             p[2] = cube[i][j][k][side][l][2];
-//            
-//            if(r1 == i + 1){
-//                //p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
-//            }
-//            if(c1 == j + 1) {
-//                //p = yRotate(p,(float) Math.sin(yAngle),(float)Math.cos(yAngle));
-//            }
+            
+            if(x1 == i + 1){
+                p = xRotate(p,(float) Math.sin(xAngle),(float)Math.cos(xAngle));
+            }
+            if(y1 == j + 1) {
+                p = yRotate(p,(float) Math.sin(yAngle),(float)Math.cos(yAngle));
+            }
+            if(z1 == k + 1) {
+                p = zRotate(p,(float) Math.sin(zAngle),(float)Math.cos(zAngle));
+            }
+            
             gl.glVertex3f( p[0],p[1],p[2] );
         }
     }
@@ -526,6 +592,7 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
     public void keyPressed(KeyEvent e) {
         switch(e.getKeyCode()) {
             case KeyEvent.VK_A: // L'
+                //rotating = true;
 //                r1 = 1;
 //                xAngle -= SECTION_ROTATE_ANGLE;
 //                this.xRotationClockwise();
@@ -741,17 +808,29 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
                 break;
             case KeyEvent.VK_UP:
                 if(selectedCube[0] == TOP) {
-                    this.xRotationCounterclockwise(selectedCube[1] + 1);
+                    opposite = false;
+                    x1 = selectedCube[1] + 1;
+                    //this.xRotationCounterclockwise(selectedCube[1] + 1);
                 }else if(selectedCube[0] == LEFT) {
-                    this.zRotationCounterclockwise(3 - selectedCube[2]);
+                    //this.zRotationCounterclockwise(3 - selectedCube[2]);
+                    opposite = false;
+                    z1 = selectedCube[2] + 1;
                 }else if(selectedCube[0] == RIGHT) {
-                    this.zRotationClockwise(3 - selectedCube[2]);
+                    //this.zRotationClockwise(3 - selectedCube[2]);
+                    opposite = true;
+                    z1 = selectedCube[2] + 1;
                 }else if(selectedCube[0] == FRONT) {
-                    this.xRotationCounterclockwise(selectedCube[1] + 1);
+                   //this.xRotationCounterclockwise(selectedCube[1] + 1);
+                   opposite = false;
+                    x1 = selectedCube[1] + 1;
                 }else if(selectedCube[0] == BACK) {
-                    this.xRotationClockwise(selectedCube[1] + 1);
+                    //this.xRotationClockwise(selectedCube[1] + 1);
+                    opposite = true;
+                    x1 = selectedCube[1] + 1;
                 }else if(selectedCube[0] == BOTTOM) {
-                    this.xRotationCounterclockwise(selectedCube[1] + 1);
+                    //this.xRotationCounterclockwise(selectedCube[1] + 1);
+                    opposite = true;
+                    x1 = selectedCube[1] + 1;
                 }
                 
                 break;
