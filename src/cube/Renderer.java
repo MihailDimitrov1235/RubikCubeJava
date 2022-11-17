@@ -121,8 +121,8 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
         new Rotation() {@Override public void rotate(int n) { xRotationClockwise(n); x1 = n; opposite = true; isScrambling = true; } },
         new Rotation() {@Override public void rotate(int n) { yRotationCounterclockwise(n); y1 = n; opposite = false; isScrambling = true; } },
         new Rotation() {@Override public void rotate(int n) { yRotationClockwise(n); y1 = n; opposite = true; isScrambling = true; } },
-        new Rotation() {@Override public void rotate(int n) { zRotationClockwise(n); z1 = n; opposite = true; isScrambling = true; } },
-        new Rotation() {@Override public void rotate(int n) { zRotationCounterclockwise(n); z1 = n; opposite = false; isScrambling = true; } },
+        new Rotation() {@Override public void rotate(int n) { zRotationClockwise(n); z1 = n == 3 ? 1 : 3; opposite = true; isScrambling = true; } },
+        new Rotation() {@Override public void rotate(int n) { zRotationCounterclockwise(n); z1 = n == 3 ? 1 : 3; opposite = false; isScrambling = true; } },
     };
    
     @Override
@@ -441,7 +441,7 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
                                         }
                                     }  
                                 }else {
-                                    
+                                    isScrambling = false;
                                 }   
                             }              
                         }
