@@ -35,6 +35,7 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
     private static boolean oppositeSide = false;
     private static float rotateAngle = 0.05f;
     private static boolean opposite;
+    private static boolean isScrambling;
     
     private static final int TOP = 0;
     private static final int BOTTOM = 1;
@@ -116,14 +117,14 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
    }
    
    private final Rotation[] rotateActions = new Rotation[] {
-        new Rotation() {@Override public void rotate(int n) { xRotationCounterclockwise(n); } },
-        new Rotation() {@Override public void rotate(int n) { xRotationClockwise(n); } },
-        new Rotation() {@Override public void rotate(int n) { yRotationCounterclockwise(n); } },
-        new Rotation() {@Override public void rotate(int n) { yRotationClockwise(n); } },
-        new Rotation() {@Override public void rotate(int n) { zRotationClockwise(n); } },
-        new Rotation() {@Override public void rotate(int n) { zRotationCounterclockwise(n); } },
+        new Rotation() {@Override public void rotate(int n) { xRotationCounterclockwise(n); x1 = n; opposite = false; isScrambling = true; } },
+        new Rotation() {@Override public void rotate(int n) { xRotationClockwise(n); x1 = n; opposite = true; isScrambling = true; } },
+        new Rotation() {@Override public void rotate(int n) { yRotationCounterclockwise(n); y1 = n; opposite = false; isScrambling = true; } },
+        new Rotation() {@Override public void rotate(int n) { yRotationClockwise(n); y1 = n; opposite = true; isScrambling = true; } },
+        new Rotation() {@Override public void rotate(int n) { zRotationClockwise(n); z1 = n; opposite = true; isScrambling = true; } },
+        new Rotation() {@Override public void rotate(int n) { zRotationCounterclockwise(n); z1 = n; opposite = false; isScrambling = true; } },
     };
-    
+   
     @Override
     public void init(GLAutoDrawable drawable) {    
         final GL2 gl = drawable.getGL().getGL2();
@@ -344,28 +345,32 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
                             if(Math.toDegrees(Math.abs(xAngle)) >= 90) {
                                 xAngle = 0;
                                 x1 = 0;
-                                if(oppositeSide){
-                                    if(selectedCube[0] == TOP) {
-                                        this.xRotationCounterclockwise(selectedCube[1] + 1);
-                                    }else if(selectedCube[0] == FRONT) {
-                                        this.xRotationCounterclockwise(selectedCube[1] + 1);
-                                    }else if(selectedCube[0] == BACK) {
-                                        this.xRotationClockwise(selectedCube[1] + 1);
-                                    }else if(selectedCube[0] == BOTTOM) {
-                                        this.xRotationCounterclockwise(selectedCube[1] + 1);
-                                    }
-                                }else{
-                                    if(selectedCube[0] == TOP) {
-                                        this.xRotationClockwise(selectedCube[1] + 1);
-                                    }else if(selectedCube[0] == FRONT) {
-                                        this.xRotationClockwise(selectedCube[1] + 1);
-                                    }else if(selectedCube[0] == BACK) {
-                                        this.xRotationCounterclockwise(selectedCube[1] + 1);
-                                    }else if(selectedCube[0] == BOTTOM) {
-                                        this.xRotationClockwise(selectedCube[1] + 1);
-                                    }
+                                if(!isScrambling) {
+                                    if(oppositeSide){
+                                       if(selectedCube[0] == TOP) {
+                                       this.xRotationCounterclockwise(selectedCube[1] + 1);
+                                       }else if(selectedCube[0] == FRONT) {
+                                       this.xRotationCounterclockwise(selectedCube[1] + 1);
+                                       }else if(selectedCube[0] == BACK) {
+                                       this.xRotationClockwise(selectedCube[1] + 1);
+                                       }else if(selectedCube[0] == BOTTOM) {
+                                       this.xRotationCounterclockwise(selectedCube[1] + 1);
+                                       }
+                                   }else{
+                                       if(selectedCube[0] == TOP) {
+                                       this.xRotationClockwise(selectedCube[1] + 1);
+                                       }else if(selectedCube[0] == FRONT) {
+                                       this.xRotationClockwise(selectedCube[1] + 1);
+                                       }else if(selectedCube[0] == BACK) {
+                                       this.xRotationCounterclockwise(selectedCube[1] + 1);
+                                       }else if(selectedCube[0] == BOTTOM) {
+                                       this.xRotationClockwise(selectedCube[1] + 1);
+                                       }
+                                   }
+                                }else {
+                                    isScrambling = false;
                                 }
-                            }
+                            }                        
                         }
                         if(y1 != 0){
                             if(opposite){
@@ -376,27 +381,32 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
                              if(Math.toDegrees(Math.abs(yAngle)) >= 90) {
                                 yAngle = 0;
                                 y1 = 0;
-                                if(oppositeSide){
-                                    if(selectedCube[0] == LEFT) {
-                                        this.yRotationClockwise(selectedCube[1] + 1);
-                                    }else if(selectedCube[0] == RIGHT) {
-                                        this.yRotationClockwise(selectedCube[1] + 1);
-                                    }else if(selectedCube[0] == FRONT) {
-                                        this.yRotationClockwise(selectedCube[2] + 1);
-                                    }else if(selectedCube[0] == BACK) {
-                                        this.yRotationClockwise(selectedCube[2] + 1);
-                                    }
-                                }else{
-                                    if(selectedCube[0] == LEFT) {
-                                        this.yRotationCounterclockwise(selectedCube[1] + 1);
-                                    }else if(selectedCube[0] == RIGHT) {
-                                        this.yRotationCounterclockwise(selectedCube[1] + 1);
-                                    }else if(selectedCube[0] == FRONT) {
-                                        this.yRotationCounterclockwise(selectedCube[2] + 1);
-                                    }else if(selectedCube[0] == BACK) {
-                                        this.yRotationCounterclockwise(selectedCube[2] + 1);
-                                    }
+                                if(!isScrambling) {
+                                   if(oppositeSide){
+                                        if(selectedCube[0] == LEFT) {
+                                            this.yRotationClockwise(selectedCube[1] + 1);
+                                        }else if(selectedCube[0] == RIGHT) {
+                                            this.yRotationClockwise(selectedCube[1] + 1);
+                                        }else if(selectedCube[0] == FRONT) {
+                                            this.yRotationClockwise(selectedCube[2] + 1);
+                                        }else if(selectedCube[0] == BACK) {
+                                            this.yRotationClockwise(selectedCube[2] + 1);
+                                        }
+                                    }else{
+                                        if(selectedCube[0] == LEFT) {
+                                            this.yRotationCounterclockwise(selectedCube[1] + 1);
+                                        }else if(selectedCube[0] == RIGHT) {
+                                            this.yRotationCounterclockwise(selectedCube[1] + 1);
+                                        }else if(selectedCube[0] == FRONT) {
+                                            this.yRotationCounterclockwise(selectedCube[2] + 1);
+                                        }else if(selectedCube[0] == BACK) {
+                                            this.yRotationCounterclockwise(selectedCube[2] + 1);
+                                        }
+                                    }  
+                                }else {
+                                    isScrambling = false;
                                 }
+                               
                             }
                         }
                         if(z1 != 0){
@@ -408,28 +418,32 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
                             if(Math.toDegrees(Math.abs(zAngle)) >= 90) {
                                 zAngle = 0;
                                 z1 = 0;
-                                if(oppositeSide){
-                                    if(selectedCube[0] == LEFT) {
-                                        this.zRotationCounterclockwise(3 - selectedCube[2]);
-                                    }else if(selectedCube[0] == RIGHT) {
-                                        this.zRotationClockwise(3 - selectedCube[2]);
-                                    }else if(selectedCube[0] == TOP) {
-                                        this.zRotationClockwise(3 - selectedCube[2]);
-                                    }else if(selectedCube[0] == BOTTOM) {
-                                        this.zRotationCounterclockwise(3 - selectedCube[2]);
-                                    }
-                                }else{
-                                    if(selectedCube[0] == LEFT) {
-                                        this.zRotationClockwise(3 - selectedCube[2]);
-                                    }else if(selectedCube[0] == RIGHT) {
-                                        this.zRotationCounterclockwise(3 - selectedCube[2]);
-                                    }else if(selectedCube[0] == TOP) {
-                                        this.zRotationCounterclockwise(3 - selectedCube[2]);
-                                    }else if(selectedCube[0] == BOTTOM) {
-                                        this.zRotationClockwise(3 - selectedCube[2]);
-                                    }
-                                }
-                            }
+                                if(!isScrambling) {
+                                   if(oppositeSide){
+                                        if(selectedCube[0] == LEFT) {
+                                            this.zRotationCounterclockwise(3 - selectedCube[2]);
+                                        }else if(selectedCube[0] == RIGHT) {
+                                            this.zRotationClockwise(3 - selectedCube[2]);
+                                        }else if(selectedCube[0] == TOP) {
+                                            this.zRotationClockwise(3 - selectedCube[2]);
+                                        }else if(selectedCube[0] == BOTTOM) {
+                                            this.zRotationCounterclockwise(3 - selectedCube[2]);
+                                        }
+                                    }else{
+                                        if(selectedCube[0] == LEFT) {
+                                            this.zRotationClockwise(3 - selectedCube[2]);
+                                        }else if(selectedCube[0] == RIGHT) {
+                                            this.zRotationCounterclockwise(3 - selectedCube[2]);
+                                        }else if(selectedCube[0] == TOP) {
+                                            this.zRotationCounterclockwise(3 - selectedCube[2]);
+                                        }else if(selectedCube[0] == BOTTOM) {
+                                            this.zRotationClockwise(3 - selectedCube[2]);
+                                        }
+                                    }  
+                                }else {
+                                    
+                                }   
+                            }              
                         }
                     }
                 }
