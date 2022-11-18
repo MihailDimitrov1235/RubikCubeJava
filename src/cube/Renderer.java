@@ -350,7 +350,6 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
                             if(Math.toDegrees(Math.abs(xAngle)) >= 90) {
                                 xAngle = 0;
                                 x1 = 0;
-                                if(!isScrambling) {
                                     if(oppositeSide){
                                        if(selectedCube[0] == TOP) {
                                        this.xRotationCounterclockwise(selectedCube[1] + 1);
@@ -372,16 +371,6 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
                                        this.xRotationClockwise(selectedCube[1] + 1);
                                        }
                                    }
-                                }else {
-//                                    java.util.Random rand = new java.util.Random();
-//                                    int num = rand.nextInt(2);
-//                                    if(num == 0) {
-                                        this.xRotationClockwise(x1);
-//                                    }else {
-//                                        this.xRotationCounterclockwise(x1);
-//                                    }
-                                    isScrambling = false;
-                                }
                             }                        
                         }
                         if(y1 != 0){
@@ -393,7 +382,6 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
                              if(Math.toDegrees(Math.abs(yAngle)) >= 90) {
                                 yAngle = 0;
                                 y1 = 0;
-                                if(!isScrambling) {
                                    if(oppositeSide){
                                         if(selectedCube[0] == LEFT) {
                                             this.yRotationClockwise(selectedCube[1] + 1);
@@ -415,16 +403,6 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
                                             this.yRotationCounterclockwise(selectedCube[2] + 1);
                                         }
                                     }  
-                                }else {
-//                                    java.util.Random rand = new java.util.Random();
-//                                    int num = rand.nextInt(2);
-//                                    if(num == 0) {
-                                        this.yRotationClockwise(y1);
-//                                    }else {
-//                                        this.yRotationCounterclockwise(y1);
-//                                    }
-                                  isScrambling = false;
-                                }
                                
                             }
                         }
@@ -437,39 +415,27 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
                             if(Math.toDegrees(Math.abs(zAngle)) >= 90) {
                                 zAngle = 0;
                                 z1 = 0;
-                                if(!isScrambling) {
-                                   if(oppositeSide){
-                                        if(selectedCube[0] == LEFT) {
-                                            this.zRotationCounterclockwise(3 - selectedCube[2]);
-                                        }else if(selectedCube[0] == RIGHT) {
-                                            this.zRotationClockwise(3 - selectedCube[2]);
-                                        }else if(selectedCube[0] == TOP) {
-                                            this.zRotationClockwise(3 - selectedCube[2]);
-                                        }else if(selectedCube[0] == BOTTOM) {
-                                            this.zRotationCounterclockwise(3 - selectedCube[2]);
-                                        }
-                                    }else{
-                                        if(selectedCube[0] == LEFT) {
-                                            this.zRotationClockwise(3 - selectedCube[2]);
-                                        }else if(selectedCube[0] == RIGHT) {
-                                            this.zRotationCounterclockwise(3 - selectedCube[2]);
-                                        }else if(selectedCube[0] == TOP) {
-                                            this.zRotationCounterclockwise(3 - selectedCube[2]);
-                                        }else if(selectedCube[0] == BOTTOM) {
-                                            this.zRotationClockwise(3 - selectedCube[2]);
-                                        }
-                                    }  
-                                }else {
-                                    //java.util.Random rand = new java.util.Random();
-                                    //int num = rand.nextInt(2);
-                                    //if(num == 0) {
-                                        this.zRotationClockwise(z1);
-                                    //}else {
-                                        //this.zRotationCounterclockwise(z1);
-                                    //}
-                                    isScrambling = false;
-                                }
-                                
+                                if(oppositeSide){
+                                     if(selectedCube[0] == LEFT) {
+                                         this.zRotationCounterclockwise(3 - selectedCube[2]);
+                                     }else if(selectedCube[0] == RIGHT) {
+                                         this.zRotationClockwise(3 - selectedCube[2]);
+                                     }else if(selectedCube[0] == TOP) {
+                                         this.zRotationClockwise(3 - selectedCube[2]);
+                                     }else if(selectedCube[0] == BOTTOM) {
+                                         this.zRotationCounterclockwise(3 - selectedCube[2]);
+                                     }
+                                 }else{
+                                     if(selectedCube[0] == LEFT) {
+                                         this.zRotationClockwise(3 - selectedCube[2]);
+                                     }else if(selectedCube[0] == RIGHT) {
+                                         this.zRotationCounterclockwise(3 - selectedCube[2]);
+                                     }else if(selectedCube[0] == TOP) {
+                                         this.zRotationCounterclockwise(3 - selectedCube[2]);
+                                     }else if(selectedCube[0] == BOTTOM) {
+                                         this.zRotationClockwise(3 - selectedCube[2]);
+                                     }
+                                 }  
                             }              
                         }
 
@@ -994,17 +960,96 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
         selectedCube[0] = rand.nextInt(6);
         selectedCube[1] = rand.nextInt(3);
         selectedCube[2] = rand.nextInt(3);
-        int axis = rand.nextInt(3)+1;
-        if(axis==1){
-            x1=rand.nextInt(3)+1;
+        int rotationType = rand.nextInt(4);
+        if(rotationType == 0){
+            oppositeSide = true;
+            if(selectedCube[0] == TOP) {
+                opposite = false;
+                x1 = selectedCube[1] + 1;
+            }else if(selectedCube[0] == LEFT) {
+                opposite = false;
+                z1 = selectedCube[2] + 1;
+            }else if(selectedCube[0] == RIGHT) {
+                opposite = true;
+                z1 = selectedCube[2] + 1;
+            }else if(selectedCube[0] == FRONT) {
+               opposite = false;
+                x1 = selectedCube[1] + 1;
+            }else if(selectedCube[0] == BACK) {
+                opposite = true;
+                x1 = selectedCube[1] + 1;
+            }else if(selectedCube[0] == BOTTOM) {
+                opposite = false;
+                x1 = selectedCube[1] + 1;
+            }
+        }else if(rotationType == 1){
+            oppositeSide = false;
+            if(selectedCube[0] == TOP) {
+                opposite = true;
+                x1 = selectedCube[1] + 1;
+            }else if(selectedCube[0] == LEFT) {
+                opposite = true;
+                z1 = selectedCube[2] + 1;
+            }else if(selectedCube[0] == RIGHT) {
+                opposite = false;
+                z1 = selectedCube[2] + 1;
+            }else if(selectedCube[0] == FRONT) {
+               opposite = true;
+                x1 = selectedCube[1] + 1;
+            }else if(selectedCube[0] == BACK) {
+                opposite = false;
+                x1 = selectedCube[1] + 1;
+            }else if(selectedCube[0] == BOTTOM) {
+                opposite = false;
+                x1 = selectedCube[1] + 1;
+            } 
+        }else if(rotationType == 2){
+            oppositeSide = true;
+            if(selectedCube[0] == TOP) {
+                opposite = true;
+                z1 = selectedCube[2] + 1;
+            }else if(selectedCube[0] == LEFT) {
+                opposite = true;
+                y1 = selectedCube[1] + 1;
+            }else if(selectedCube[0] == RIGHT) {
+                opposite = true;
+                y1 = selectedCube[1] + 1;
+            }else if(selectedCube[0] == FRONT) {
+                opposite = true;
+                y1 = selectedCube[2] + 1;
+            }else if(selectedCube[0] == BACK) {
+                opposite = true;
+                y1 = selectedCube[2] + 1;
+            }else if(selectedCube[0] == BOTTOM) {
+                opposite = false;
+                z1 = selectedCube[2] + 1;
+            }
+        }else if(rotationType == 3){
+            oppositeSide = false;
+            if(selectedCube[0] == TOP) {
+                opposite = false;
+                z1 = selectedCube[2] + 1;
+            }else if(selectedCube[0] == LEFT) {
+                opposite = false;
+                y1 = selectedCube[1] + 1;
+            }else if(selectedCube[0] == RIGHT) {
+                opposite = false;
+                y1 = selectedCube[1] + 1;
+            }else if(selectedCube[0] == FRONT) {
+                opposite = false;
+                y1 = selectedCube[2] + 1;
+            }else if(selectedCube[0] == BACK) {
+                opposite = false;
+                y1 = selectedCube[2] + 1;
+            }else if(selectedCube[0] == BOTTOM) {
+                opposite = true;
+                z1 = selectedCube[2] + 1;
+            }
         }
-        else if(axis==2){
-            y1=rand.nextInt(3)+1;
-        }else if(axis==3){
-            z1=rand.nextInt(3)+1;
-        }
-        
         if(br >= 20) {
+            x1 = 0;
+            y1 = 0;
+            z1 = 0;
             for(int i = 0; i < 3; i++) {
                 selectedCube[i] = rememberSelectedCube[i];
             }
