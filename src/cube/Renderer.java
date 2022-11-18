@@ -31,11 +31,13 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
     private static float[][][][][][] cube = new float[3][3][3][6][4][3];
     private static String[][][] cubeColors = new String[6][3][3];
     private static int[] selectedCube = new int[3];
+    private static int[] rememberSelectedCube = new int[3];
     private static float offset = 0.05f;
     private static boolean oppositeSide = false;
     private static float rotateAngle = 0.05f;
     private static boolean opposite;
     private static boolean isScrambling;
+    private static int br = 20;
     
     private static final int TOP = 0;
     private static final int BOTTOM = 1;
@@ -157,6 +159,9 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
         selectedCube[0] = TOP;
         selectedCube[1] = 1;
         selectedCube[2] = 1;
+        rememberSelectedCube[0] = TOP;
+        rememberSelectedCube[1] = 1;
+        rememberSelectedCube[2] = 1;
         
         for (int x = 0; x < 3; x++) {
             for (int y = 0; y < 3; y++) {
@@ -368,6 +373,13 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
                                        }
                                    }
                                 }else {
+//                                    java.util.Random rand = new java.util.Random();
+//                                    int num = rand.nextInt(2);
+//                                    if(num == 0) {
+                                        this.xRotationClockwise(x1);
+//                                    }else {
+//                                        this.xRotationCounterclockwise(x1);
+//                                    }
                                     isScrambling = false;
                                 }
                             }                        
@@ -404,7 +416,14 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
                                         }
                                     }  
                                 }else {
-                                    isScrambling = false;
+//                                    java.util.Random rand = new java.util.Random();
+//                                    int num = rand.nextInt(2);
+//                                    if(num == 0) {
+                                        this.yRotationClockwise(y1);
+//                                    }else {
+//                                        this.yRotationCounterclockwise(y1);
+//                                    }
+                                  isScrambling = false;
                                 }
                                
                             }
@@ -441,9 +460,22 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
                                         }
                                     }  
                                 }else {
+                                    //java.util.Random rand = new java.util.Random();
+                                    //int num = rand.nextInt(2);
+                                    //if(num == 0) {
+                                        this.zRotationClockwise(z1);
+                                    //}else {
+                                        //this.zRotationCounterclockwise(z1);
+                                    //}
                                     isScrambling = false;
-                                }   
+                                }
+                                
                             }              
+                        }
+
+                        if(br<20&&(x1==0&&y1==0&&z1==0)){
+                            System.out.println(br);
+                            scramble();
                         }
                     }
                 }
@@ -947,18 +979,35 @@ public class Renderer implements GLEventListener, KeyListener, MouseListener, Mo
                 }
                 break;
             case KeyEvent.VK_Z:
+                br = 0;
+                for(int i = 0; i < 3; i++) {
+                    rememberSelectedCube[i] = selectedCube[i];
+                }
                 this.scramble();
                 break;
         }
     }
     
     public void scramble() {
-        for(int i = 0; i < 20; i++) {
-            java.util.Random rand = new java.util.Random();
-            int num = rand.nextInt(rotateActions.length);
-            int rotateNum = rand.nextInt(2);
-            int rotateSide = rotateNum == 0 ? 3 : 1;
-            rotateActions[num].rotate(rotateSide);
+        java.util.Random rand = new java.util.Random();
+        br++;
+        selectedCube[0] = rand.nextInt(6);
+        selectedCube[1] = rand.nextInt(3);
+        selectedCube[2] = rand.nextInt(3);
+        int axis = rand.nextInt(3)+1;
+        if(axis==1){
+            x1=rand.nextInt(3)+1;
+        }
+        else if(axis==2){
+            y1=rand.nextInt(3)+1;
+        }else if(axis==3){
+            z1=rand.nextInt(3)+1;
+        }
+        
+        if(br >= 20) {
+            for(int i = 0; i < 3; i++) {
+                selectedCube[i] = rememberSelectedCube[i];
+            }
         }
     }
     
