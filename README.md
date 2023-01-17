@@ -13,7 +13,7 @@ Rubik cube created in java using opengl
 7. select all files from libs/JOGL and click ok
 8. select the newly created library in the project
 
-##Platform (if platform != 11)
+## Platform (if platform != 11)
 1. right click the project -> properties -> libraries -> manage platforms
 2. press add platform
 3. choose download OpenJDK
